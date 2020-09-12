@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+	<!--
+	<parent>
+		<groupId>com.meitun</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.2.0.RELEASE</version>
+	</parent>
+	-->
+	
+	<groupId>com.sweet</groupId>
+	<artifactId>hadoop3Study</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>sweet-hadoop3</name>
+	<url>http://maven.apache.org</url>
+	
+	<!--
+	<modules>		
+		<module>youwei-store-client</module>
+		<module>youwei-store-common</module>
+		<module>youwei-store-core</module>
+		<module>youwei-store-web</module>
+  </modules>
+  -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<fastjson.version>1.2.12</fastjson.version>
+		<commons-lang.version>2.6</commons-lang.version>
+		<commons-collections.version>3.2.1</commons-collections.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<build.plugins.plugin.version>3.0.1</build.plugins.plugin.version>
+		<spark.version>3.0.0</spark.version>
+		<postgresql.version>42.2.5</postgresql.version>
+		<scala.version>2.12.7</scala.version>
+		<mysql.version>8.0.13</mysql.version>
+		<junit.version>4.12</junit.version>
+		<flink.version>1.11.1</flink.version>
+		<hadoop.version>3.2.1</hadoop.version>
+		<hbase.version>2.3.1</hbase.version>
+		<kafka.version>2.6.0</kafka.version>
+	</properties>
+
+		<dependencies>
+			
+			<!-- Logging API start-->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<!-- Logging API end-->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang.version}</version>
+			</dependency>		
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons-collections.version}</version>
+			</dependency>
+			<!-- 引入spark -->
+			<dependency>
+			  <groupId>org.apache.spark</groupId>
+			  <artifactId>spark-core_2.12</artifactId>
+			  <version>${spark.version}</version>
+			  <scope>provided</scope>
+				<exclusions>
+					<!--
+					<exclusion>
+						<groupId>org.apache.zookeeper</groupId>
+						<artifactId>zookeeper</artifactId>
+					</exclusion>
+					-->
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty-all</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- 引入spark sql -->
+			<dependency>
+				<groupId>org.apache.spark</groupId>
+				<artifactId>spark-sql_2.12</artifactId>
+				<version>${spark.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入mysql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+				<scope>provided</scope>
+			</dependency>
+            <!-- 引入spark streaming -->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-streaming_2.12</artifactId>
+                <version>${spark.version}</version>
+				<scope>provided</scope>
+            </dependency>
+			<!-- 引入spark mllib -->
+			<dependency>
+				<groupId>org.apache.spark</groupId>
+				<artifactId>spark-mllib_2.12</artifactId>
+				<version>${spark.version}</version>
+				<scope>provided</scope>
+			</dependency>
+            <!-- 引入kafka streaming -->
+            <!--
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
+                <version>${spark.version}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.kafka</groupId>
+						<artifactId>kafka-clients</artifactId>
+					</exclusion>
+				</exclusions>
+            </dependency>
+            -->
+			<!-- 引入spark_hive版本 -->
+			<dependency>
+				<groupId>org.apache.spark</groupId>
+				<artifactId>spark-hive_2.12</artifactId>
+				<version>${spark.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入postgresql.version -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入scala -->
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-library</artifactId>
+				<version>${scala.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-compiler</artifactId>
+				<version>${scala.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-reflect</artifactId>
+				<version>${scala.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!--<dependency>-->
+				<!--<groupId>org.scala-tools</groupId>-->
+				<!--<artifactId>maven-scala-plugin</artifactId>-->
+				<!--<version>2.15.2</version>-->
+				<!--<scope>provided</scope>-->
+			<!--</dependency>-->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入flink -->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-scala_2.12</artifactId>
+				<version>${flink.version}</version>
+				<!-- provided表示只影响编译测试阶段,而在运行阶段,假定容器已经提供了这个jar包,我们就无需这个jar包 -->
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-streaming-scala_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+				<!--<scope>provided</scope>-->
+			</dependency>
+			<!-- flink1.8版本后的引入 -->
+			<!-- 引进table API -->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-table-planner_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- scala bridge -->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-table-api-scala-bridge_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 如果是java -->
+			<dependency>
+			  <groupId>org.apache.flink</groupId>
+			  <artifactId>flink-table-api-java-bridge_2.12</artifactId>
+			  <version>${flink.version}</version>
+			  <scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>${kafka.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入flink1.8.1对应的kafka -->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-connector-kafka_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入flink state queryable -->
+                        <!--
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-queryable-state-client-java_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-runtime-web_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+                        -->  
+			<!-- 引入rocksdb插件 -->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-statebackend-rocksdb_2.12</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 引入flink fileSystem -->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-filesystem_2.12</artifactId>
+                <version>${flink.version}</version>
+				<scope>provided</scope>
+
+			</dependency>
+			<!-- 引入flink cep -->
+			<!--
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-cep_2.11</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			-->
+			<dependency>
+				<groupId>org.apache.flink</groupId>
+				<artifactId>flink-json</artifactId>
+				<version>${flink.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!--  引入hadoop mr unit -->
+			<dependency>
+				<groupId>org.apache.hadoop</groupId>
+				<artifactId>hadoop-client</artifactId>
+				<version>${hadoop.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty-all</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+                        <!--    
+			<dependency>
+				<groupId>org.apache.mrunit</groupId>
+				<artifactId>mrunit</artifactId>
+				<version>1.1.0</version>
+				<classifier>hadoop2</classifier>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.zookeeper</groupId>
+						<artifactId>zookeeper</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+                        --> 
+			<!--<dependency>-->
+				<!--<groupId>org.apache.hadoop</groupId>-->
+				<!--<artifactId>hadoop-minicluster</artifactId>-->
+				<!--<version>${hadoop.version}</version>-->
+				<!--<scope>provided</scope>-->
+				<!--<exclusions>-->
+					<!--<exclusion>-->
+						<!--<groupId>io.netty</groupId>-->
+						<!--<artifactId>netty-all</artifactId>-->
+					<!--</exclusion>-->
+					<!--<exclusion>-->
+						<!--<groupId>io.netty</groupId>-->
+						<!--<artifactId>netty</artifactId>-->
+					<!--</exclusion>-->
+				<!--</exclusions>-->
+			<!--</dependency>-->
+			<!-- 统一引入zookeeper -->
+                        <!--
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+                        -->
+			<!-- 引入zookeeper的高级API curator -->
+                        <!--
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator-recipes.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.zookeeper</groupId>
+						<artifactId>zookeeper</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+                        -->
+			<!-- 引入hbase -->
+			<dependency>
+				<groupId>org.apache.hbase</groupId>
+				<artifactId>hbase-client</artifactId>
+				<version>${hbase.version}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>jdk.tools</groupId>
+						<artifactId>jdk.tools</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hbase</groupId>
+				<artifactId>hbase-common</artifactId>
+				<version>${hbase.version}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>jetty-util</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hbase</groupId>
+				<artifactId>hbase-mapreduce</artifactId>
+				<version>${hbase.version}</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+                <!-- 引入maven scala插件 -->
+                <!--<plugin>-->
+					<!--<groupId>net.alchim31.maven</groupId>-->
+					<!--<artifactId>scala-maven-plugin</artifactId>-->
+					<!--<version>4.4.0</version>-->
+					<!--<executions>-->
+						<!--<execution>-->
+							<!--<id>scala-compile-first</id>-->
+							<!--<phase>process-resources</phase>-->
+							<!--<goals>-->
+								<!--<goal>add-source</goal>-->
+								<!--<goal>compile</goal>-->
+							<!--</goals>-->
+						<!--</execution>-->
+					<!--</executions>-->
+				<!--</plugin>-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!--<plugin>-->
+				<!--<groupId>net.alchim31.maven</groupId>-->
+				<!--<artifactId>scala-maven-plugin</artifactId>-->
+			<!--</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.scala-tools</groupId>-->
+				<!--<artifactId>maven-scala-plugin</artifactId>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<goals>-->
+							<!--<goal>compile</goal>-->
+							<!--<goal>testCompile</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>4.4.0</version>
+				<configuration>
+					<scalaCompatVersion>2.12</scalaCompatVersion>
+					<scalaVersion>${scala.version}</scalaVersion>
+				</configuration>
+				<!-- other settings-->
+			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-source-plugin</artifactId>-->
+				<!--<version>${build.plugins.plugin.version}</version>-->
+				<!--<configuration>  -->
+					<!--<attach>true</attach>  -->
+				<!--</configuration>  -->
+				<!--<executions>  -->
+					<!--<execution>  -->
+						<!--<phase>compile</phase>  -->
+						<!--<goals>  -->
+							<!--<goal>jar</goal>  -->
+						<!--</goals>  -->
+					<!--</execution>  -->
+				<!--</executions>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-jar-plugin</artifactId>-->
+				<!--<configuration>-->
+				  <!--<archive>-->
+					<!--<manifest>-->
+
+					<!--</manifest>-->
+				  <!--</archive>-->
+				<!--</configuration>-->
+			 <!--</plugin>-->
+
+			 <!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-dependency-plugin</artifactId>-->
+				<!--<executions>-->
+				  <!--<execution>-->
+					<!--<id>copy</id>-->
+					<!--<phase>package</phase>-->
+					<!--<goals>-->
+					  <!--<goal>copy-dependencies</goal>-->
+					<!--</goals>-->
+					<!--<configuration>-->
+					  <!--&lt;!&ndash; ${project.build.directory} 构建目录，缺省为target &ndash;&gt;-->
+					  <!--<outputDirectory>-->
+						<!--${project.build.directory}/lib-->
+					  <!--</outputDirectory>-->
+					<!--</configuration>-->
+				  <!--</execution>-->
+				<!--</executions>-->
+			 <!--</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<!--<version>3.1.1</version>-->
+				<configuration>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>module-info.class</exclude>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+	<repositories>
+		<!--添加aliyun maven地址 -->
+		<repository>
+			<id>maven-ali</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>
