@@ -41,7 +41,8 @@
 		<flink.version>1.11.1</flink.version>
 		<hadoop.version>3.2.1</hadoop.version>
 		<hbase.version>2.3.1</hbase.version>
-		<kafka.version>2.6.0</kafka.version>
+		<kafka.version>2.5.1</kafka.version>
+		<zookeeper.version>3.5.8</zookeeper.version>
 	</properties>
 
 		<dependencies>
@@ -334,11 +335,11 @@
 				<!--</exclusions>-->
 			<!--</dependency>-->
 			<!-- 统一引入zookeeper -->
-                        <!--
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
 				<version>${zookeeper.version}</version>
+				<scope>provided</scope>
 				<exclusions>
 					<exclusion>
 						<groupId>io.netty</groupId>
@@ -346,7 +347,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-                        -->
 			<!-- 引入zookeeper的高级API curator -->
                         <!--
 			<dependency>
