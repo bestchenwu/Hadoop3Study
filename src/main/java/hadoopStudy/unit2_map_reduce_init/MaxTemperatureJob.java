@@ -2,6 +2,7 @@ package hadoopStudy.unit2_map_reduce_init;
 
 import hadoopStudy.unit2_map_reduce_init.mapper.TemperatureMapper;
 import hadoopStudy.unit2_map_reduce_init.reduce.TemperatureReducer;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -22,13 +23,16 @@ public class MaxTemperatureJob extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
+        Configuration conf = getConf();
+        //指定队列名称为hadoop
+        conf.set("mapred.job.queue.name","hadoop");
         Path inputPutPath = new Path(args[0]);
         Path outputPath = new Path(args[1]);
-        FileSystem fileSystem = FileSystem.get(getConf());
+        FileSystem fileSystem = FileSystem.get(conf);
         if (fileSystem.exists(outputPath)) {
             fileSystem.delete(outputPath, true);
         }
-        Job job = Job.getInstance(getConf());
+        Job job = Job.getInstance(conf);
         FileInputFormat.setInputPaths(job, inputPutPath);
         FileOutputFormat.setOutputPath(job, outputPath);
         job.setJarByClass(getClass());
