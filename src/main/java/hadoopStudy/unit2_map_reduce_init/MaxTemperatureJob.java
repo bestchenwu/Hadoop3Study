@@ -8,6 +8,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.compress.GzipCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -35,6 +36,8 @@ public class MaxTemperatureJob extends Configured implements Tool {
         Job job = Job.getInstance(conf);
         FileInputFormat.setInputPaths(job, inputPutPath);
         FileOutputFormat.setOutputPath(job, outputPath);
+        //设置输出为GZIP压缩
+        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
         job.setJarByClass(getClass());
         job.setMapperClass(TemperatureMapper.class);
         //当mapper的输出和reducer的输出类型一致的时候 不需要设置key value class
