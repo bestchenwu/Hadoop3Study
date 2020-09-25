@@ -232,7 +232,7 @@
 				<groupId>org.apache.kafka</groupId>
 				<artifactId>kafka-clients</artifactId>
 				<version>${kafka.version}</version>
-				<scope>provided</scope>
+				<!--<scope>provided</scope>-->
 			</dependency>
 			<!-- 引入flink1.8.1对应的kafka -->
 			<dependency>
