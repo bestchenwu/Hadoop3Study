@@ -102,7 +102,14 @@ public class TextPair implements WritableComparable<TextPair> {
         @Override
         public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
             //因为Text调用write方法的时候先写入的是byte流的长度，再写入byte数组，所以这里调用readInt方法可以拿到长度
-            //todo:第一个是字符串的长度,第二个是什么?
+            //第一个WritableUtils.decodeVIntSize(b1[s1])返回的是字节长度的占位情况,
+            //因为byte最大支持127，所以如果大于127，就出现占多位的情况
+            //这里为1
+            //第二个是取的第一个text序列化的长度
+            //所以假定第一个TextPair是abc ba,第二个TextPair是abc ab
+            //那么存储的内容为[3,97,98,99,2,98,97] 第二个为[3,97,98,99,2,97,98]
+            //这个时候firstLen1返回的是4
+            //所以compare(b1 s1 firstLen1 b2 s2 firstLen2)实际上返回的比较的是[3,97,98,99]与[3,97,98,99]
             int firstLen1 = WritableUtils.decodeVIntSize(b1[s1])+readInt(b1,s1);
             int firstLen2 = WritableUtils.decodeVIntSize(b2[s1])+readInt(b2,s2);
             int compare = TEXT_COMPARATOR.compare(b1, s1, firstLen1, b2, s2, firstLen2);

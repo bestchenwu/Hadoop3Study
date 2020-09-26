@@ -1,1 +1,1 @@
-本章介绍hadoop mapReduce特效
+本章介绍hadoop mapReduce
