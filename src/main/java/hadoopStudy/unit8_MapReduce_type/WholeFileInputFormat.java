@@ -57,6 +57,7 @@ class WholeFileReader extends RecordReader<NullWritable,BytesWritable>{
             try{
                 byte[] contents = new byte[(int)fileSplit.getLength()];
                 Path path = fileSplit.getPath();
+                fs = FileSystem.get(path.toUri(),conf);
                 in = fs.open(path);
                 IOUtils.readFully(in,contents,0,contents.length);
                 value.set(contents,0,contents.length);

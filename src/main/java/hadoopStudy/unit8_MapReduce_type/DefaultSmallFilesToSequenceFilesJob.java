@@ -1,32 +1,29 @@
 package hadoopStudy.unit8_MapReduce_type;
 
-import hadoopStudy.unit5_compress.SmallFilesToSequenceFilesMapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-
 /**
- * 将若干小文件合并成顺序文件
+ * 与{@link SmallFilesToSequenceFilesJob}进行比较,查看mapper的个数是否受{@link WholeFileInputFormat}的影响
  *
- * @author chenwu on 2020.10.5
+ * @author chenwu on 2020.10.6
  */
-public class SmallFilesToSequenceFilesJob extends Configured implements Tool {
+public class DefaultSmallFilesToSequenceFilesJob extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String inputFiles = args[0];
         String output = args[1];
-        Job job = Job.getInstance(conf, SmallFilesToSequenceFilesJob.class.getSimpleName());
+        Job job = Job.getInstance(conf, DefaultSmallFilesToSequenceFilesJob.class.getSimpleName());
         Path inputPath = new Path(inputFiles);
         Path outputPath = new Path(output);
         FileSystem fs = FileSystem.get(outputPath.toUri(),conf);
@@ -35,10 +32,10 @@ public class SmallFilesToSequenceFilesJob extends Configured implements Tool {
         if(fileStatus.isDirectory()){
             FileStatus[] fileStatuses = fs.listStatus(inputPath);
             for(FileStatus file : fileStatuses){
-                WholeFileInputFormat.addInputPath(job,file.getPath());
+                FileInputFormat.addInputPath(job,file.getPath());
             }
         }else{
-            WholeFileInputFormat.addInputPath(job,inputPath);
+            FileInputFormat.addInputPath(job,inputPath);
         }
         //如果输出路径存在，则先递归删除
         if(fs.exists(outputPath)){
@@ -47,18 +44,12 @@ public class SmallFilesToSequenceFilesJob extends Configured implements Tool {
         SequenceFileOutputFormat.setOutputPath(job,outputPath);
         job.setJarByClass(getClass());
         //Mapper的个数由getSplits方法返回的List<InputSplit>的大小确定
-        job.setMapperClass(SmallFilesToSequenceFilesMapper.class);
-        job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(BytesWritable.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(BytesWritable.class);
-        job.setInputFormatClass(WholeFileInputFormat.class);
         job.setOutputFormatClass(SequenceFileOutputFormat.class);
         return job.waitForCompletion(true) ? 0 : -1;
     }
 
     public static void main(String[] args) throws Exception {
-        SmallFilesToSequenceFilesJob job = new SmallFilesToSequenceFilesJob();
+        DefaultSmallFilesToSequenceFilesJob job = new DefaultSmallFilesToSequenceFilesJob();
         int result = ToolRunner.run(job, args);
         System.exit(result);
     }
