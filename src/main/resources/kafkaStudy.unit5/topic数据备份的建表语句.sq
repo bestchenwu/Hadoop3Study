@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS `topic_offset_record`;
+CREATE TABLE `topic_offset_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增序列ID',
+  `topic_name` varchar(255) DEFAULT NULL COMMENT 'topic的名称',
+  `topic_partition` int(20) DEFAULT NULL COMMENT 'topic的partition序号',
+  `topic_offset` bigint(20) DEFAULT NULL COMMENT 'topic的位移',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
