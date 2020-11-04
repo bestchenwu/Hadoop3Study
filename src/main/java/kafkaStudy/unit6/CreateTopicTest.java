@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.message.CreateTopicsRequestData;
 import org.apache.kafka.common.protocol.ApiKeys;
 import org.apache.kafka.common.requests.CreateTopicsRequest;
