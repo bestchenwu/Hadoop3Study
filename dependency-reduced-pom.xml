@@ -73,12 +73,6 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.13</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.2.5</version>
@@ -95,6 +89,12 @@
       <artifactId>scala-compiler</artifactId>
       <version>2.12.7</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>scala-xml_2.12</artifactId>
+          <groupId>org.scala-lang.modules</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.scala-lang</groupId>
@@ -107,70 +107,162 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-scala_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-core</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-java</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-shaded-asm-7</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-streaming-scala_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-streaming-java_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-planner_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-common</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-api-scala-bridge_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-api-scala_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-api-java-bridge_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-api-java</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-streaming-java_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-java</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-connector-kafka_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-connector-kafka-base_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-statebackend-rocksdb_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>frocksdbjni</artifactId>
+          <groupId>com.data-artisans</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-connector-filesystem_2.12</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-json</artifactId>
       <version>1.11.1</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.zookeeper</groupId>
-      <artifactId>zookeeper</artifactId>
-      <version>3.5.8</version>
-      <scope>provided</scope>
       <exclusions>
         <exclusion>
-          <artifactId>netty</artifactId>
-          <groupId>io.netty</groupId>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -192,6 +284,54 @@
           <artifactId>hadoop-auth</artifactId>
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>netty-all</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-protobuf</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-hadoop-compat</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-hadoop2-compat</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-protocol-shaded</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-protocol</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-miscellaneous</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-netty</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jcodings</artifactId>
+          <groupId>org.jruby.jcodings</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>joni</artifactId>
+          <groupId>org.jruby.joni</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>metrics-core</artifactId>
+          <groupId>io.dropwizard.metrics</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-crypto</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -204,6 +344,30 @@
           <artifactId>jetty-util</artifactId>
           <groupId>org.mortbay.jetty</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>netty-all</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-logging</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-gson</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-miscellaneous</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-netty</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-crypto</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -211,25 +375,93 @@
       <artifactId>hbase-mapreduce</artifactId>
       <version>2.3.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>netty-all</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-zookeeper</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-metrics</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-metrics-api</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-asyncfs</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-server</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-replication</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-hdfs</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-protobuf</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-protocol</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-protocol-shaded</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>metrics-core</artifactId>
+          <groupId>io.dropwizard.metrics</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-hadoop-compat</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-hadoop2-compat</artifactId>
+          <groupId>org.apache.hbase</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-miscellaneous</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hbase-shaded-netty</artifactId>
+          <groupId>org.apache.hbase.thirdparty</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <properties>
-    <postgresql.version>42.2.5</postgresql.version>
     <zookeeper.version>3.5.8</zookeeper.version>
-    <flink.version>1.11.1</flink.version>
-    <slf4j.version>1.7.21</slf4j.version>
-    <junit.version>4.12</junit.version>
-    <commons-lang.version>2.6</commons-lang.version>
-    <kafka.version>2.5.1</kafka.version>
-    <hbase.version>2.3.1</hbase.version>
-    <log4j.version>1.2.17</log4j.version>
-    <mysql.version>8.0.13</mysql.version>
+    <spark.version>3.0.0</spark.version>
+    <scala.version>2.12.7</scala.version>
+    <scala-binary.version>2.12</scala-binary.version>
+    <postgresql.version>42.2.5</postgresql.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hadoop.version>3.2.1</hadoop.version>
-    <build.plugins.plugin.version>3.0.1</build.plugins.plugin.version>
-    <scala.version>2.12.7</scala.version>
-    <spark.version>3.0.0</spark.version>
+    <hbase.version>2.3.1</hbase.version>
     <fastjson.version>1.2.12</fastjson.version>
+    <junit.version>4.12</junit.version>
+    <mysql.version>8.0.13</mysql.version>
+    <kafka.version>2.5.1</kafka.version>
     <commons-collections.version>3.2.1</commons-collections.version>
+    <slf4j.version>1.7.21</slf4j.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <build.plugins.plugin.version>3.0.1</build.plugins.plugin.version>
+    <log4j.version>1.2.17</log4j.version>
+    <flink.version>1.11.1</flink.version>
   </properties>
 </project>
+
