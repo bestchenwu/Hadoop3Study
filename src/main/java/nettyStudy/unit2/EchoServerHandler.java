@@ -7,14 +7,13 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
-import java.nio.ByteBuffer;
 
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuffer in = (ByteBuffer)msg;
-        System.out.println("Server received:"+in.toString());
+        ByteBuf in = (ByteBuf)msg;
+        System.out.println("Server received:"+in.toString(CharsetUtil.UTF_8));
         //将接受到的消息写给发送者
         ctx.write(in);
     }

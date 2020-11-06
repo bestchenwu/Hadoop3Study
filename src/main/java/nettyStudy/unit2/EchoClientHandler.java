@@ -1,12 +1,12 @@
 package nettyStudy.unit2;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
-import java.nio.ByteBuffer;
 
 /**
  * 该标记表示可以被多个channel共享
@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
  * @author chenwu on 2020.11.6
  */
 @ChannelHandler.Sharable
-public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuffer> {
+public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     /**
      * 收到一条消息的时候被调用
@@ -24,8 +24,8 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuffer> {
      * @throws Exception
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ByteBuffer msg) throws Exception {
-        System.out.println("client recieved:"+ msg.toString());
+    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+        System.out.println("client recieved:"+ msg.toString(CharsetUtil.UTF_8));
     }
 
     /**
