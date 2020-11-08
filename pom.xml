@@ -28,8 +28,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<fastjson.version>1.2.12</fastjson.version>
-		<commons-lang.version>2.6</commons-lang.version>
-		<commons-collections.version>3.2.1</commons-collections.version>
+		
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<build.plugins.plugin.version>3.0.1</build.plugins.plugin.version>
@@ -75,6 +74,7 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
+			<!--  
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -85,6 +85,7 @@
 				<artifactId>commons-collections</artifactId>
 				<version>${commons-collections.version}</version>
 			</dependency>
+			-->
 			<!-- 引入spark -->
 			<!--
 			<dependency>
