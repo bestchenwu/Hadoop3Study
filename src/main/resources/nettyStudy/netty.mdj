@@ -75,7 +75,7 @@
 											"font": "Arial;13;0",
 											"left": -528,
 											"top": 192,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -321,7 +321,7 @@
 											"font": "Arial;13;0",
 											"left": 336,
 											"top": 128,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -497,7 +497,7 @@
 											"font": "Arial;13;0",
 											"left": 288,
 											"top": 96,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -786,7 +786,7 @@
 											"font": "Arial;13;0",
 											"left": 288,
 											"top": -16,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -1325,7 +1325,7 @@
 											"font": "Arial;13;0",
 											"left": 208,
 											"top": -48,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -1501,7 +1501,7 @@
 											"font": "Arial;13;0",
 											"left": -32,
 											"top": -32,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -1819,7 +1819,7 @@
 							"font": "Arial;13;0",
 							"left": 328,
 							"top": 160,
-							"width": 129.18359375,
+							"width": 129.18368530273438,
 							"height": 25,
 							"text": "封装了Java的IO操作"
 						},
@@ -1832,7 +1832,7 @@
 							"font": "Arial;13;0",
 							"left": 208,
 							"top": 992,
-							"width": 244,
+							"width": 244.00027465820312,
 							"height": 25,
 							"text": "用于处理连接的生命周期中所发生的事情"
 						},
@@ -1891,7 +1891,7 @@
 											"font": "Arial;13;0",
 											"left": -96,
 											"top": 928,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -2067,7 +2067,7 @@
 											"font": "Arial;13;0",
 											"left": -48,
 											"top": 1020,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -2468,7 +2468,7 @@
 							"font": "Arial;13;0",
 							"left": 608,
 							"top": 168,
-							"width": 62,
+							"width": 62.00006103515625,
 							"height": 25,
 							"text": "异步操作"
 						},
@@ -2525,7 +2525,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -592,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -2696,7 +2696,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -160,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -2869,7 +2869,7 @@
 											"font": "Arial;13;0",
 											"left": -64,
 											"top": -16,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -3231,7 +3231,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"top": 128,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -3404,7 +3404,7 @@
 											"font": "Arial;13;0",
 											"left": 112,
 											"top": 96,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -3578,7 +3578,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"top": -32,
-											"width": 109.80810546875,
+											"width": 109.80813598632812,
 											"height": 13,
 											"text": "(from channel组件)"
 										},
@@ -4243,7 +4243,7 @@
 							"font": "Arial;13;0",
 							"left": 80,
 							"top": 832,
-							"width": 231,
+							"width": 231.00025939941406,
 							"height": 25,
 							"text": "客户端链接远程服务端使用的配置引导"
 						},
@@ -4256,9 +4256,279 @@
 							"font": "Arial;13;0",
 							"left": 352,
 							"top": 832,
-							"width": 192,
+							"width": 192.00021362304688,
 							"height": 25,
 							"text": "服务端用于本地监听的配置引导"
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAF1xL72LFQSKaQ=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"model": {
+								"$ref": "AAAAAAF1xL72K1QQTTs="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAF1xL72LVQTbQ0=",
+									"_parent": {
+										"$ref": "AAAAAAF1xL72LFQSKaQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xL72K1QQTTs="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF1xL72LVQUOGQ=",
+											"_parent": {
+												"$ref": "AAAAAAF1xL72LVQTbQ0="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -480,
+											"top": -32,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF1xL72LVQVbh8=",
+											"_parent": {
+												"$ref": "AAAAAAF1xL72LVQTbQ0="
+											},
+											"font": "Arial;13;1",
+											"left": 61,
+											"top": 1119,
+											"width": 127.09912109375,
+											"height": 13,
+											"text": "NioEventLoopGroup"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF1xL72LVQWaaY=",
+											"_parent": {
+												"$ref": "AAAAAAF1xL72LVQTbQ0="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -480,
+											"top": -32,
+											"width": 109.80813598632812,
+											"height": 13,
+											"text": "(from channel组件)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF1xL72LVQXbhw=",
+											"_parent": {
+												"$ref": "AAAAAAF1xL72LVQTbQ0="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -480,
+											"top": -32,
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 56,
+									"top": 1112,
+									"width": 137.09912109375,
+									"height": 25,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAF1xL72LVQUOGQ="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAF1xL72LVQVbh8="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAF1xL72LVQWaaY="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAF1xL72LVQXbhw="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAF1xL72LVQYd0Y=",
+									"_parent": {
+										"$ref": "AAAAAAF1xL72LFQSKaQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xL72K1QQTTs="
+									},
+									"font": "Arial;13;0",
+									"left": 56,
+									"top": 1137,
+									"width": 137.09912109375,
+									"height": 10
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAF1xL72LVQZrQg=",
+									"_parent": {
+										"$ref": "AAAAAAF1xL72LFQSKaQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xL72K1QQTTs="
+									},
+									"font": "Arial;13;0",
+									"left": 56,
+									"top": 1147,
+									"width": 137.09912109375,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAF1xL72LVQaNYs=",
+									"_parent": {
+										"$ref": "AAAAAAF1xL72LFQSKaQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xL72K1QQTTs="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -240,
+									"top": -16,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAF1xL72LlQbALE=",
+									"_parent": {
+										"$ref": "AAAAAAF1xL72LFQSKaQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xL72K1QQTTs="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -240,
+									"top": -16,
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 56,
+							"top": 1112,
+							"width": 137.09912109375,
+							"height": 45,
+							"nameCompartment": {
+								"$ref": "AAAAAAF1xL72LVQTbQ0="
+							},
+							"attributeCompartment": {
+								"$ref": "AAAAAAF1xL72LVQYd0Y="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAF1xL72LVQZrQg="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAF1xL72LVQaNYs="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAF1xL72LlQbALE="
+							}
+						},
+						{
+							"_type": "UMLDependencyView",
+							"_id": "AAAAAAF1xMCNHFVeNKU=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"model": {
+								"$ref": "AAAAAAF1xMCNG1VcKTk="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF1xMCNHFVfH9s=",
+									"_parent": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xMCNG1VcKTk="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 107,
+									"top": 1087,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"edgePosition": 1
+								},
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF1xMCNHlVgG6Y=",
+									"_parent": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xMCNG1VcKTk="
+									},
+									"visible": null,
+									"font": "Arial;13;0",
+									"left": 92,
+									"top": 1087,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 30,
+									"hostEdge": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"edgePosition": 1
+								},
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF1xMCNHlVhXDs=",
+									"_parent": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"model": {
+										"$ref": "AAAAAAF1xMCNG1VcKTk="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 136,
+									"top": 1088,
+									"height": 13,
+									"alpha": -1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF1xMCNHFVeNKU="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF1uyVphKbHaiM="
+							},
+							"tail": {
+								"$ref": "AAAAAAF1xL72LFQSKaQ="
+							},
+							"lineStyle": 1,
+							"points": "123:1111;122:1077",
+							"showVisibility": true,
+							"nameLabel": {
+								"$ref": "AAAAAAF1xMCNHFVfH9s="
+							},
+							"stereotypeLabel": {
+								"$ref": "AAAAAAF1xMCNHlVgG6Y="
+							},
+							"propertyLabel": {
+								"$ref": "AAAAAAF1xMCNHlVhXDs="
+							}
 						}
 					]
 				},
@@ -5380,7 +5650,7 @@
 											"font": "Arial;13;0",
 											"left": 104,
 											"top": 456,
-											"width": 481.626953125,
+											"width": 481.62713623046875,
 											"height": 40,
 											"text": "相对于pipeline,如果事件是从Pipeline出去的，那么就称为output;反之则称为input"
 										}
@@ -5480,7 +5750,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF1uysvUqwyUOw="
 							},
-							"name": "Role1"
+							"name": "Role1",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -5488,7 +5759,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF1uysvUqwyUOw="
 							},
-							"name": "Role2"
+							"name": "Role2",
+							"type": ""
 						}
 					]
 				},
@@ -5575,6 +5847,29 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "AbstractBootstrap"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAF1xL72K1QQTTs=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "NioEventLoopGroup",
+					"ownedElements": [
+						{
+							"_type": "UMLDependency",
+							"_id": "AAAAAAF1xMCNG1VcKTk=",
+							"_parent": {
+								"$ref": "AAAAAAF1xL72K1QQTTs="
+							},
+							"source": {
+								"$ref": "AAAAAAF1xL72K1QQTTs="
+							},
+							"target": {
+								"$ref": "AAAAAAF1uyVpg6bFNow="
+							}
+						}
+					]
 				}
 			]
 		}
