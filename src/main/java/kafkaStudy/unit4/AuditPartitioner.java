@@ -1,10 +1,9 @@
 package kafkaStudy.unit4;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.producer.Partitioner;
 import org.apache.kafka.common.Cluster;
 import org.apache.kafka.common.PartitionInfo;
-
+import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;

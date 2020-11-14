@@ -1,7 +1,7 @@
 package kafkaStudy.unit4;
 
 import kafkaStudy.model.User;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.kafka.common.serialization.Serializer;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -23,7 +23,7 @@ public class UserSerializer implements Serializer<User> {
         try {
             bytes = objectMapper.writeValueAsString(data).getBytes();
         } catch (IOException e) {
-            System.err.println(ExceptionUtils.getFullStackTrace(e));
+            System.err.println(ExceptionUtils.getStackTrace(e));
             //bytes = new byte[0];
         }
         return bytes;

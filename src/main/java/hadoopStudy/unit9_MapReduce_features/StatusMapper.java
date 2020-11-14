@@ -1,8 +1,8 @@
 package hadoopStudy.unit9_MapReduce_features;
 
 import common.constants.SymbolConstants;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;

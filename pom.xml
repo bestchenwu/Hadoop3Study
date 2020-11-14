@@ -351,18 +351,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<dependency>
-				<groupId>org.apache.hbase</groupId>
-				<artifactId>hbase-mapreduce</artifactId>
-				<version>${hbase.version}</version>
-				<scope>provided</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>io.netty</groupId>
-						<artifactId>netty-all</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+
 		</dependencies>
 	
 	<build>
@@ -477,7 +466,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<!--<version>3.1.1</version>-->
+<!--				<version>3.2.4</version>-->
 				<configuration>
 					<filters>
 						<filter>
