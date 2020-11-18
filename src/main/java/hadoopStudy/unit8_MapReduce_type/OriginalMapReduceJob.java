@@ -23,6 +23,7 @@ public class OriginalMapReduceJob extends Configured implements Tool {
         FileSystem fs = FileSystem.get(conf);
         Job job = Job.getInstance(conf, "OriginalMapReduceJob");
         FileInputFormat.setInputPaths(job, new Path(args[0]));
+        job.setJarByClass(OriginalMapReduceJob.class);
         Path outputPath = new Path(args[1]);
         if(fs.exists(outputPath)){
             fs.delete(outputPath,true);

@@ -23,6 +23,7 @@ public class FloatSortTest {
             --c;
             a=a-1;
         }while(a>0);
+        System.out.println("a="+a);
         Assert.assertEquals(-1,c);
     }
 }
