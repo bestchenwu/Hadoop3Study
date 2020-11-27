@@ -1,8 +1,9 @@
 package nettyStudy.unit5;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.buffer.UnpooledHeapByteBuf;
+import nettyStudy.common.CommonByteBufUtil;
 
 import java.util.Arrays;
 
@@ -34,6 +35,39 @@ public class ByteBufTest {
         }
     }
 
+    /**
+     * 测试直接缓冲区
+     *
+     * @author chenwu on 2020.11.27
+     */
+    public void testDirectBuffer(){
+        ByteBuf directBuf = Unpooled.directBuffer(100);
+        directBuf.writeBytes("hi direct byte buf".getBytes());
+        if(!directBuf.hasArray()){
+            int length = directBuf.readableBytes();
+            byte[] copiedArray = new byte[length];
+            directBuf.getBytes(directBuf.readerIndex(),copiedArray);
+            handArray(copiedArray,0,length);
+        }
+    }
+
+    /**
+     * 一个或者多个bytebuf的组合视图
+     *
+     * @author chenwu on 2020.11.27
+     */
+    public void testCompositeBuf(){
+        CompositeByteBuf messageBuf  = Unpooled.compositeBuffer();
+        ByteBuf head = Unpooled.buffer();
+        head.writeBytes("I am head".getBytes());
+        ByteBuf body = Unpooled.directBuffer(100);
+        body.writeBytes("I am body".getBytes());
+        messageBuf.addComponents(head,body);
+        for(ByteBuf byteBuf : messageBuf){
+            System.out.println("message:"+ CommonByteBufUtil.decodeByteBuf(byteBuf));
+        }
+    }
+
     private void handArray(byte[] array,int offset,int length){
         //拷贝的范围是[from,to)
         byte[] copyArray = Arrays.copyOfRange(array, offset, offset + length);
@@ -43,6 +77,6 @@ public class ByteBufTest {
 
     public static void main(String[] args) {
         ByteBufTest byteBufTest = new ByteBufTest();
-        byteBufTest.testHeapByteBuf();
+        byteBufTest.testCompositeBuf();
     }
 }
