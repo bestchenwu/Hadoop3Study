@@ -16,16 +16,12 @@ import java.io.ObjectOutputStream;
 public class HadoopBlockSerializableStudy {
 
     public static void main(String[] args) throws IOException {
+        //第一个参数是block的id 第二个参数是block的长度 第三个是时间戳
         Block block = new Block(11l,12l,13l);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
         ObjectOutputStream oos = new ObjectOutputStream(bos);
-        //如果使用java的序列化机制
-        oos.writeObject(block);
-        //使用Hadoop的序列化机制，数组长度只有24个字节
-        //block.write(dos);
-        dos.close();
-        oos.close();
+        block.write(oos);
         System.out.println("array length:"+bos.toByteArray().length);
+        oos.close();
     }
 }
