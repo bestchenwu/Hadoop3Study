@@ -1,0 +1,1 @@
+本章描述EmbeddedChannel的测试
