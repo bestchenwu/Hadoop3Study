@@ -1,11 +1,11 @@
 package zookeeperStudy.client;
 
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.ACL;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -33,6 +33,23 @@ public class ZkClient implements Watcher {
         System.out.println("zookeeper connected is established");
     }
 
+    public ZkClient(String connectedString, int sessionTimeout,long sessionId,byte[] sessionPassword) throws IOException {
+        zookeeper = new ZooKeeper(connectedString, sessionTimeout, this,sessionId,sessionPassword);
+        try{
+            Thread.sleep(100*1000);
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    public long getSessionId(){
+        return zookeeper.getSessionId();
+    }
+
+    public byte[] getSessionPassword(){
+        return zookeeper.getSessionPasswd();
+    }
+
     @Override
     public void process(WatchedEvent event) {
         System.out.println("received event:" + event);
@@ -42,6 +59,21 @@ public class ZkClient implements Watcher {
         }else if(Event.KeeperState.Disconnected == event.getState()){
             System.out.println("disconnected at "+ LocalTime.now());
         }
+    }
 
+    /**
+     * 利用同步的方法创建节点
+     *
+     * @param path
+     * @param data
+     * @param acl
+     * @param createMode
+     * @throws KeeperException
+     * @throws InterruptedException
+     * @author chenwu on 2021.3.26
+     */
+    public void createData(String path, byte[] data, List<ACL> acl,
+                           CreateMode createMode) throws KeeperException,InterruptedException {
+        zookeeper.create(path,data,acl,createMode);
     }
 }
