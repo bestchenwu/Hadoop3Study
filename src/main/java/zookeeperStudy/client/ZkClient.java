@@ -72,8 +72,24 @@ public class ZkClient implements Watcher {
      * @throws InterruptedException
      * @author chenwu on 2021.3.26
      */
-    public void createData(String path, byte[] data, List<ACL> acl,
+    public void createDataSync(String path, byte[] data, List<ACL> acl,
                            CreateMode createMode) throws KeeperException,InterruptedException {
         zookeeper.create(path,data,acl,createMode);
+    }
+
+    /**
+     * 异步创建节点
+     *
+     * @param path
+     * @param data
+     * @param acl
+     * @param createMode
+     * @param callback
+     * @param ctx
+     * @author chenwu on 2021.4.1
+     */
+    public void createDateAsync(String path, byte[] data, List<ACL> acl,
+                                CreateMode createMode, AsyncCallback.StringCallback callback, Object ctx){
+            zookeeper.create(path,data,acl,createMode,callback,ctx);
     }
 }
