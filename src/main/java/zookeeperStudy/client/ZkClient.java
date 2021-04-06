@@ -88,8 +88,19 @@ public class ZkClient implements Watcher {
      * @param ctx
      * @author chenwu on 2021.4.1
      */
-    public void createDateAsync(String path, byte[] data, List<ACL> acl,
+    public void createDataAsync(String path, byte[] data, List<ACL> acl,
                                 CreateMode createMode, AsyncCallback.StringCallback callback, Object ctx){
             zookeeper.create(path,data,acl,createMode,callback,ctx);
+    }
+
+    /**
+     * 删除节点内容
+     *
+     * @param path
+     * @param version
+     * @author chenwu on 2021.4.6
+     */
+    public void deleteData(String path,int version) throws KeeperException, InterruptedException {
+        zookeeper.delete(path,version);
     }
 }
