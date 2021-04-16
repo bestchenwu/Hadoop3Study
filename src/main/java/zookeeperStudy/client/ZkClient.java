@@ -22,31 +22,31 @@ public class ZkClient implements Watcher {
 
     public ZkClient(String connectedString, int sessionTimeout) throws IOException {
         zookeeper = new ZooKeeper(connectedString, sessionTimeout, this);
-        System.out.println("zookeeper state:"+zookeeper.getState());
-        try{
+        System.out.println("zookeeper state:" + zookeeper.getState());
+        try {
             //如果当前计数器为0,则立即返回
             //如果当前计数器>0  则等待计数器为0(外部调用countDown)或者线程被打断
             connectedSemphore.await();
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         System.out.println("zookeeper connected is established");
     }
 
-    public ZkClient(String connectedString, int sessionTimeout,long sessionId,byte[] sessionPassword) throws IOException {
-        zookeeper = new ZooKeeper(connectedString, sessionTimeout, this,sessionId,sessionPassword);
-        try{
-            Thread.sleep(100*1000);
-        }catch(InterruptedException e){
+    public ZkClient(String connectedString, int sessionTimeout, long sessionId, byte[] sessionPassword) throws IOException {
+        zookeeper = new ZooKeeper(connectedString, sessionTimeout, this, sessionId, sessionPassword);
+        try {
+            Thread.sleep(100 * 1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public long getSessionId(){
+    public long getSessionId() {
         return zookeeper.getSessionId();
     }
 
-    public byte[] getSessionPassword(){
+    public byte[] getSessionPassword() {
         return zookeeper.getSessionPasswd();
     }
 
@@ -54,10 +54,10 @@ public class ZkClient implements Watcher {
     public void process(WatchedEvent event) {
         System.out.println("received event:" + event);
         if (Event.KeeperState.SyncConnected == event.getState()) {
-            System.out.println("connected at "+ LocalTime.now());
+            System.out.println("connected at " + LocalTime.now());
             connectedSemphore.countDown();//将当前计数器-1  如果计数达到0,则释放所有等待的线程
-        }else if(Event.KeeperState.Disconnected == event.getState()){
-            System.out.println("disconnected at "+ LocalTime.now());
+        } else if (Event.KeeperState.Disconnected == event.getState()) {
+            System.out.println("disconnected at " + LocalTime.now());
         }
     }
 
@@ -73,8 +73,8 @@ public class ZkClient implements Watcher {
      * @author chenwu on 2021.3.26
      */
     public void createDataSync(String path, byte[] data, List<ACL> acl,
-                           CreateMode createMode) throws KeeperException,InterruptedException {
-        zookeeper.create(path,data,acl,createMode);
+                               CreateMode createMode) throws KeeperException, InterruptedException {
+        zookeeper.create(path, data, acl, createMode);
     }
 
     /**
@@ -89,8 +89,8 @@ public class ZkClient implements Watcher {
      * @author chenwu on 2021.4.1
      */
     public void createDataAsync(String path, byte[] data, List<ACL> acl,
-                                CreateMode createMode, AsyncCallback.StringCallback callback, Object ctx){
-            zookeeper.create(path,data,acl,createMode,callback,ctx);
+                                CreateMode createMode, AsyncCallback.StringCallback callback, Object ctx) {
+        zookeeper.create(path, data, acl, createMode, callback, ctx);
     }
 
     /**
@@ -100,7 +100,17 @@ public class ZkClient implements Watcher {
      * @param version
      * @author chenwu on 2021.4.6
      */
-    public void deleteData(String path,int version) throws KeeperException, InterruptedException {
-        zookeeper.delete(path,version);
+    public void deleteData(String path, int version) throws KeeperException, InterruptedException {
+        zookeeper.delete(path, version);
+    }
+
+    public List<String> getChildrenWithOrNotWatch(String path, boolean watch) throws KeeperException,
+            InterruptedException {
+        return zookeeper.getChildren(path, watch);
+    }
+
+    public List<String> getChildrenWithWatcher(String path, Watcher watcher) throws KeeperException,
+            InterruptedException {
+        return zookeeper.getChildren(path, watcher);
     }
 }

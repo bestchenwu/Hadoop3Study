@@ -87,4 +87,20 @@ public class ZkClientTest {
 
         }
     }
+
+    @Test
+    public void testGetChildrenWithOrNotWatch(){
+        ZkClient zkClient = null;
+        try {
+            zkClient = new ZkClient("127.0.0.1:2181", 1000 * 5);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path = "";
+        try{
+            zkClient.getChildrenWithOrNotWatch(path,true);
+        }catch(Exception e){
+
+        }
+    }
 }
