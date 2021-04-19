@@ -2,12 +2,12 @@ package zookeeperStudy.unit5;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.data.ACL;
 import org.junit.Test;
 import zookeeperStudy.client.ZkClient;
 import zookeeperStudy.client.ZkClientConstants;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ZkClientTest {
 
@@ -67,7 +67,7 @@ public class ZkClientTest {
         }
     }
 
-    @Test
+    //@Test
     public void testDeleteData() {
         ZkClient zkClient = null;
         try {
@@ -96,11 +96,19 @@ public class ZkClientTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String path = "";
+        String path = "/zk-book";
         try{
-            zkClient.getChildrenWithOrNotWatch(path,true);
+            //对节点path注册了一个子节点变更的事件通知
+            List<String> childPathList = zkClient.getChildrenWithOrNotWatch(path,true);
+            System.out.println("childPathList:"+childPathList);
+            zkClient.createDataSync("/zk-book/testWatch","testWatch".getBytes(),ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
         }catch(Exception e){
-
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
