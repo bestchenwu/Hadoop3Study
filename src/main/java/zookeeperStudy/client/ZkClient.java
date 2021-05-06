@@ -66,7 +66,7 @@ public class ZkClient implements Watcher {
                 }
             }else if(event.getType() == Event.EventType.NodeDataChanged){
                 try{
-                    System.out.println("data:"+zookeeper.getData(event.getPath(),true,stat));
+                    System.out.println("data:"+new String(zookeeper.getData(event.getPath(),true,stat)));
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -133,7 +133,25 @@ public class ZkClient implements Watcher {
         zookeeper.setData(path,data,version);
     }
 
-    public void getData(String path, Stat stat) throws KeeperException, InterruptedException {
-        zookeeper.getData(path,true,stat);
+    public String getData(String path, Stat stat) throws KeeperException, InterruptedException {
+        return new String (zookeeper.getData(path,true,stat));
+    }
+
+    public Stat existData(String path,Watcher watcher) throws KeeperException, InterruptedException {
+        return zookeeper.exists(path,watcher);
+    }
+
+    /**
+     * 添加权限控制信息
+     * world：默认方式，相当于全世界都能访问
+     * auth：代表已经认证通过的用户(cli中可以通过addauth digest user:pwd 来添加当前上下文中的授权用户)
+     * digest：即用户名:密码这种方式认证，这也是业务系统中最常用的
+     * ip：使用Ip地址认证
+     *
+     * @param schema
+     * @param authInfo
+     */
+    public void addAuth(String schema,byte[] authInfo){
+        zookeeper.addAuthInfo(schema,authInfo);
     }
 }
