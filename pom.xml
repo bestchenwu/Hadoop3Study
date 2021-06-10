@@ -44,6 +44,9 @@
 		<hbase.version>2.3.1</hbase.version>
 		<kafka.version>2.5.1</kafka.version>
 		<zookeeper.version>3.5.8</zookeeper.version>
+		<!-- 引入redission -->
+		<redission.version>3.12.3</redission.version>
+		<jedis.version>3.2.0</jedis.version>
 	</properties>
 
 		<dependencies>
@@ -351,7 +354,17 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
+            <!-- 引入redis client -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redission.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
 		</dependencies>
 	
 	<build>

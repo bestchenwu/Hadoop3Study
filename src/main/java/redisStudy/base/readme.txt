@@ -1,0 +1,1 @@
+本章描述redis的五种基本数据类型(string list set hash zset)以及其各自的应用
