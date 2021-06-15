@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Redis的客户端操作类
@@ -19,7 +20,6 @@ import java.util.Map;
 public class RedisClient implements Closeable {
 
     private static RedisClient instance = null;
-    private Jedis jedis;
     private JedisPool pool;
 
     private void initializePool() {
@@ -54,7 +54,7 @@ public class RedisClient implements Closeable {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return jedis;
     }
@@ -64,9 +64,9 @@ public class RedisClient implements Closeable {
      *
      * @param jedis
      */
-    public void returnResource(Jedis jedis) {
+    public void closeJedis(Jedis jedis) {
         if (null != jedis) {
-            //((GenericObjectPool)pool).returnResourceObject(jedis);
+            jedis.close();
         }
     }
 
@@ -78,15 +78,8 @@ public class RedisClient implements Closeable {
             property.load(redisStream);
         }catch(IOException e){
             throw new RuntimeException(e);
-        }
-        if(Integer.parseInt(property.getProperty("redis.pool.enable"))==1){
-            //开启连接池
-            initializePool();
-        }else{
-            jedis = new Jedis(property.getProperty("redis.host"),Integer.parseInt(property.getProperty("redis.port")),
-                    Integer.parseInt(property.getProperty("redis.timeout")));
-        }
-
+        }//开启连接池
+        initializePool();
     }
 
     public static RedisClient getInstance(String propertyFile){
@@ -99,24 +92,30 @@ public class RedisClient implements Closeable {
     }
 
     public void setString(String key,String value){
-        if(jedis==null){
-
-        }else{
-            jedis.set(key,value);
-        }
-
+        Jedis jedis = getJedis();
+        jedis.set(key,value);
+        jedis.close();
     }
 
     public String getString(String key){
-        return jedis.get(key);
+        Jedis jedis = getJedis();
+        String value = jedis.get(key);
+        jedis.close();
+        return value;
+
     }
 
     public Long incr(String key){
-        return jedis.incr(key);
+        Jedis jedis = getJedis();
+        Long incr = jedis.incr(key);
+        jedis.close();
+        return incr;
     }
 
     public Long setNx(String key,String value){
+        Jedis jedis = getJedis();
         Long setnx = jedis.setnx(key, value);
+        jedis.close();
         return setnx;
     }
 
@@ -127,28 +126,112 @@ public class RedisClient implements Closeable {
      * @param timeout
      */
     public void expireKey(String key,int timeout){
+        Jedis jedis = getJedis();
         jedis.expire(key,timeout);
+        jedis.close();
     }
 
     public void deleteKey(String key){
+        Jedis jedis = getJedis();
         jedis.del(key);
+        jedis.close();
     }
 
     public void hset(String key,String field,String value){
+        Jedis jedis = getJedis();
         jedis.hset(key,field,value);
+        jedis.close();
     }
 
     public String hget(String key,String field){
-        return jedis.hget(key,field);
+        Jedis jedis = getJedis();
+        String value = jedis.hget(key, field);
+        jedis.close();
+        return value;
     }
 
     public Map<String,String> hgetAll(String key){
-        return jedis.hgetAll(key);
+        Jedis jedis = getJedis();
+        Map<String, String> map = jedis.hgetAll(key);
+        jedis.close();
+        return map;
+    }
+
+    public void zadd(String key,String value,double score){
+        Jedis jedis = getJedis();
+        jedis.zadd(key,score,value);
+        jedis.close();
+    }
+
+    public Set<String> zrangebyscore(String key, double min, double max, int offset, int count){
+        Jedis jedis = getJedis();
+        Set<String> zset = jedis.zrangeByScore(key, min, max, offset, count);
+        jedis.close();
+        return zset;
+    }
+
+    public Long zrem(String key,String[] members){
+        Jedis jedis = getJedis();
+        Long zrem = jedis.zrem(key, members);
+        jedis.close();
+        return zrem;
+    }
+
+    /**
+     * 对某一位进行设置1/0
+     *
+     * @param key
+     * @param bit
+     * @param flag
+     * @return 设置之前的值
+     */
+    public Boolean setbit(String key,long bit,boolean flag){
+        Jedis jedis = getJedis();
+        Boolean result = jedis.setbit(key,bit,flag);
+        jedis.close();
+        return result;
+    }
+
+    public Long bitcount(String key){
+        Jedis jedis = getJedis();
+        Long bitcount = jedis.bitcount(key);
+        jedis.close();
+        return bitcount;
+    }
+
+    /**
+     * 统计[start,end]之间的1的个数
+     * -1 表示最后一个位，而 -2 表示倒数第二个位
+     *
+     * @param key
+     * @param start
+     * @param end
+     * @return
+     */
+    public Long bitcount(String key,long start,long end){
+        Jedis jedis = getJedis();
+        Long bitcount = jedis.bitcount(key,start,end);
+        jedis.close();
+        return bitcount;
+    }
+
+    public Long pfadd(String key,String[] elements){
+        Jedis jedis = getJedis();
+        Long result = jedis.pfadd(key,elements);
+        jedis.close();
+        return result;
+    }
+
+    public long pfcount(String key){
+        Jedis jedis = getJedis();
+        long pfcount = jedis.pfcount(key);
+        jedis.close();
+        return pfcount;
     }
 
     @Override
     public void close(){
-        jedis.close();
+        pool.close();
     }
 
 }
