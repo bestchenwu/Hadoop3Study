@@ -177,6 +177,20 @@ public class RedisClient implements Closeable {
         return zrem;
     }
 
+    public Long zremrangeByScore(String key,double min,double max){
+        Jedis jedis = getJedis();
+        Long removeResult = jedis.zremrangeByScore(key,min,max);
+        jedis.close();
+        return removeResult;
+    }
+
+    public Long zcard(String key){
+        Jedis jedis = getJedis();
+        Long result = jedis.zcard(key);
+        jedis.close();
+        return result;
+    }
+
     /**
      * 对某一位进行设置1/0
      *
