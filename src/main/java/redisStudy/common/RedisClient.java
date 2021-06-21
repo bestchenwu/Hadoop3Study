@@ -244,6 +244,23 @@ public class RedisClient implements Closeable {
         return pfcount;
     }
 
+    /**
+     * 安全的执行jedis的命令
+     *
+     * @param callable
+     * @author chenwu on 2021.6.21
+     */
+    public void executeSafety(ExecuteWithJedis callable){
+        Jedis jedis = getJedis();
+        try{
+            callable.execute(jedis);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }finally {
+            jedis.close();
+        }
+    }
+
     @Override
     public void close(){
         pool.close();
