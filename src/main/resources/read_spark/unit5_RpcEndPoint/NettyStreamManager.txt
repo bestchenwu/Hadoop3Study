@@ -1,0 +1,7 @@
+NettyStreamManager专门为NettyRpcEnv提供文件流服务
+private val files = new ConcurrentHashMap[String, File]()
+private val jars = new ConcurrentHashMap[String, File]()
+private val dirs = new ConcurrentHashMap[String, File]()
+目前有目录、文件、jar包的下载服务
+
+最终都会包装成FileSegmentManagedBuffer提供给外部使用方

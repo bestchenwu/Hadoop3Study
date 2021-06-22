@@ -1,0 +1,6 @@
+spark自从2.2后 使用了netty取代了AKKA,就使用RPCEnv了。在sparkContext里有这样一段:
+val systemName = if (isDriver) driverSystemName else executorSystemName
+    val rpcEnv = RpcEnv.create(systemName, bindAddress, advertiseAddress, port.getOrElse(-1), conf,
+      securityManager, numUsableCores, !isDriver)
+
+用于创建RPCEnv

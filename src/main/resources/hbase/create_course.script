@@ -1,0 +1,7 @@
+# com.flink.scala2.operaters.AsyncIOFunctionTest的hbase测试 sql
+
+create 'course_test','score'
+
+put 'course_test','1000','score:data','58'
+put 'course_test','1001','score:data','65'
+put 'course_test','1002','score:data','95'

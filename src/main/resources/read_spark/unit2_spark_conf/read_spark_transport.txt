@@ -1,0 +1,7 @@
+spark自从2.x起,改为使用netty来进行组件间通信
+
+TransportClientFactory  是客户端工厂模式
+TransportServer 是服务器
+TransportClient 是客户端
+TransportContext 是传输上下文
+

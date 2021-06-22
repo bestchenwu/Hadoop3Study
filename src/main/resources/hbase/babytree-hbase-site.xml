@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<configuration>
+<property>
+	<name>hbase.rootdir</name>
+	<value>hdfs://masters/hbase</value>
+</property>
+<property>
+	<name>hbase.cluster.distributed</name>
+	<value>true</value>
+</property>
+<property>
+	<name>hbase.tmp.dir</name>
+	<value>/tmp/hbase</value>
+</property>
+<property>
+	<name>hbase.master.port</name>
+	<value>60000</value>
+</property>
+<property>
+	<name>hbase.zookeeper.quorum</name>
+	<value>ai-hadoop-zk1.bw.babytree-ops.org, ai-hadoop-zk2.bw.babytree-ops.org, ai-hadoop-zk3.bw.babytree-ops.org</value>
+</property>
+<property>
+	<name>hbase.zookeeper.property.clientPort</name>
+	<value>2182</value>
+</property>
+<property> 
+	<name>dfs.support.append</name> 
+	<value>true</value> 
+</property>
+</configuration>

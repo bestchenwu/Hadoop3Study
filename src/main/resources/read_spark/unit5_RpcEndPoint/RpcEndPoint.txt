@@ -1,0 +1,6 @@
+RPCEndPoint是对spark的RPC通信实体的统一抽象,RPCEndPoint实例使用RpcEnv来做具体工作。
+在spark2.0之前,使用AKKA模型来通信,从2.0之后使用Netty来通信。所有spark通信的节点都需要继承RpcEndPoint
+
+
+
+

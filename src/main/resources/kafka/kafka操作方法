@@ -1,0 +1,10 @@
+kafka2.0的操作方法
+
+创建topic的方法
+bin/kafka-topics.sh --create --replication-factor 1 --partitions 1 --topic test-0-10 --zookeeper localhost:2181/kafka
+
+创建消费者
+bin/kafka-console-consumer.sh -bootstrap-server localhost:9092 --topic test-0-10
+
+创建生产者
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test-0-10

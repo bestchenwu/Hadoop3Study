@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+        <property>
+               <name>hbase.master</name>
+               <value>127.0.0.1</value>
+        </property>
+        <property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://127.0.0.1:9000/hbase202</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.quorum</name>
+                <value>127.0.0.1</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.property.dataDir</name>
+                <value>/data/softWare/zookeeper-single/zookeeper-hbase</value>
+        </property>
+        <property>
+                <name>hbase.master.info.port</name>
+                <value>60010</value>
+        </property>
+        <!-- hbase scan设置cache size -->
+        <!-- 默认是Integer的最大值 -->
+        <property>
+                <name>hbase.client.scanner.caching</name>
+                <value>100</value>
+        </property>
+        <!-- 在客户端更改无效,需要更改服务端的hbase-site.xml -->
+        <!-- scanner的默认租约时间 -->
+        <property>
+                <name>hbase.client.scanner.timeout.period</name>
+                <value>2000</value>
+        </property>
+</configuration>

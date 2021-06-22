@@ -1,0 +1,13 @@
+在SparkContext的try catch初始化语句块里有
+val (sched, ts) = SparkContext.createTaskScheduler(this, master, deployMode)
+    _schedulerBackend = sched
+    _taskScheduler = ts
+    _dagScheduler = new DAGScheduler(this)
+    _heartbeatReceiver.ask[Boolean](TaskSchedulerIsSet)
+
+    // start TaskScheduler after taskScheduler sets DAGScheduler reference in DAGScheduler's
+    // constructor
+    _taskScheduler.start()
+
+用于初始化taskScheduler
+在createTaskScheduler方法体里,根据master的不同内容,来确定创建不同的taskScheduler

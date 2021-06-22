@@ -1,0 +1,1 @@
+flink run -c com.flink.scala.stream.state.CountWindowAverageTest spark-1.0-SNAPSHOT-jar-with-dependencies.jar

@@ -1,0 +1,11 @@
+org.apache.spark.util.ListenerBus 用于接受事件并把事件提交到对应事件的监听器
+从该ListenerBus延伸获得SparkListenerBus、StreamingListenerBus等
+
+SparkListenerBus针对了不同类型的sparkEvent提供了不同的处理方法
+
+其中SparkListenerStageSubmitted、SparkListenerStageCompleted等都是SparkListenerEvent的子类
+针对不同类型的event,分别调用SparkListenerInterface的不同方法
+
+由于ListenerBus是循环广播事件，所以在Spark UI界面想实现几秒刷新一下的机制，使用了LiveListenerBus
+
+LiveListenerBus使用org.apache.spark.scheduler.AsyncEventQueue来存储event

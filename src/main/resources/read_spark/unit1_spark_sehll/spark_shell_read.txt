@@ -1,0 +1,24 @@
+spark-shell在启动过程中,先后调用spark-submit,然后调用spark-class
+
+启动的时候使用org.apache.spark.repl.Main,该启动类会调用doMain()方法，在该方法里
+会使用ILoop(scala shell交互式类)来启动,ILoop的核心方法是
+def process(settings: Settings): Boolean = savingContextLoader {
+    this.settings = settings
+    createInterpreter()
+
+    // sets in to some kind of reader depending on environmental cues
+    in = in0.fold(chooseReader(settings))(r => SimpleReader(r, out, interactive = true))
+    globalFuture = future {
+      intp.initializeSynchronous()
+      loopPostInit()
+      !intp.reporter.hasErrors
+    }
+    loadFiles(settings)
+    printWelcome()
+}
+其中SparkILoop继承了ILoop，并重写了loadFiles()方法
+override def loadFiles(settings: Settings): Unit = {
+    initializeSpark()
+    super.loadFiles(settings)
+  }
+在该方法里 调用initializeSpark方法，它会重复的去读取initializationCommands并调用processLine方法

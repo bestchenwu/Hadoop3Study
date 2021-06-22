@@ -1,0 +1,2 @@
+SparkConf会使用loadSystemDefault()方法优先加载默认配置
+其中的setMaster()等方法都是间接的调用set(key,value,silent)方法

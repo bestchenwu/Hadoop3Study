@@ -1,0 +1,3 @@
+spark web界面类:org.apache.spark.ui.WebUI
+
+web ui界面都是由xxxPage类+一个listener来组成,具体可见:

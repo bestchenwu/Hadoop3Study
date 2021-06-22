@@ -1,0 +1,16 @@
+producer端设置
+1、设置acks=-1 或者all
+2、不要使用send方法而要使用带回调函数的send方法
+3、在消息发送失败的时候使用producer.close(0, TimeUnit.MILLISECONDS); 避免消息乱序问题
+4、设置max.in.flight.requests.per.connection为1 该参数的意义是producer在单个broker连接上能够发送
+的未响应请求的数量   
+       因此如果设置为1，则producer就无法在得到broker响应之前再发送消息
+
+broker端设置
+1、replication.factor >=3
+      多副本存储
+2、min.insync.replicas >1
+     消息写入到ISR的多少个副本才算成功
+
+确保replication.factor > min.insync.replicas
+   实际中推荐配置使用replication.factor = min.insync.replicas+1
