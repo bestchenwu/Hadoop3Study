@@ -26,7 +26,7 @@ public class MaxTemperatureJob extends Configured implements Tool {
     public int run(String[] args) throws Exception {
         Configuration conf = getConf();
         //指定队列名称为hadoop
-        conf.set("mapred.job.queue.name","hadoop");
+        //conf.set("mapred.job.queue.name","hadoop");
         Path inputPutPath = new Path(args[0]);
         Path outputPath = new Path(args[1]);
         FileSystem fileSystem = FileSystem.get(conf);

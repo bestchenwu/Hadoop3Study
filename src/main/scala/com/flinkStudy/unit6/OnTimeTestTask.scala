@@ -26,10 +26,10 @@ object OnTimeTestTask {
     env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
     val properties = new Properties()
     properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.2.107:9092")
-    properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-flink")
+    properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "flink-test")
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
-    val topic = ""
+    val topic = "test"
     val kafkaConsumer = env.addSource(new FlinkKafkaConsumer[String](topic, new SimpleStringSchema(), properties))
     val timeModelStream = kafkaConsumer.map(item => {
       val array = item.split(",")
