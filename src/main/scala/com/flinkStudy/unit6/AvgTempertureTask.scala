@@ -35,7 +35,7 @@ object AvgTempertureTask {
       val tempArray = str.split(",")
       TemperatureModel(tempArray(0).toLong, tempArray(1).toDouble, tempArray(2).toLong)
     })
-    val timeStream = tempStream.assignAscendingTimestamps(_.ts).map(item => (item.id, item.temp)).keyBy(_._1).timeWindow(Time.seconds(1l))
+    val timeStream = tempStream.assignAscendingTimestamps(_.ts).map(item => (item.id, item.temp)).keyBy(_._1).timeWindow(Time.minutes(1l))
     val StreamFileSinkFunction = StreamingFileSink.forRowFormat(new Path("/data/logs/flink/flink_temp_avg.txt"), new SimpleStringEncoder[(Long,Double)]("UTF-8")).build()
     timeStream.aggregate(new AvgTempertureFunction).addSink(StreamFileSinkFunction)
     env.execute("AvgTempertureTask")
