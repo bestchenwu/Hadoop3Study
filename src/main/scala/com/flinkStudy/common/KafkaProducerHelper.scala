@@ -21,9 +21,9 @@ object KafkaProducerHelper {
     val topic = "test-flink"
     val value = "coProcess"
     while (true) {
-      val id = System.currentTimeMillis().toString
-      val newValue = value + id
-      val record = new ProducerRecord[String, String](topic, id + "," + newValue)
+      val time = System.currentTimeMillis().toString
+      val newValue = value+time
+      val record = new ProducerRecord[String, String](topic, newValue + "," + time)
       kafkaProducer.send(record)
       try {
         Thread.sleep(3 * 1000)
