@@ -27,6 +27,7 @@ object CoProcessFunctionTest {
     env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
     //第一条流来自于kafka
     val properties = new Properties()
+    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"Master:9092")
     properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-flink-coProcess")
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
@@ -35,10 +36,10 @@ object CoProcessFunctionTest {
     val stream1 = kafkaStream.map(item => {
       val array = item.split(",")
       (array(0), array(1))
-    })
-    val stream2 = env.fromElements(("sensor_1", 10 * 1000l), ("sensor_2", 60 * 1000l))
+    }).keyBy(_._1)
+    val stream2 = env.fromElements(("sensor_1", 10 * 1000l), ("sensor_2", 60 * 1000l)).keyBy(_._1)
     val coStream = stream1.connect(stream2).process(new ReadFilter)
-    val streamFileSinkFunction = StreamingFileSink.forRowFormat(new Path("/data/logs/flink/flink_coProcess/"), new SimpleStringEncoder[(String, String)]("UTF-8")).build()
+      val streamFileSinkFunction = StreamingFileSink.forRowFormat(new Path("/data/logs/flink/flink_coProcess/"), new SimpleStringEncoder[(String, String)]("UTF-8")).build()
     coStream.addSink(streamFileSinkFunction)
     env.execute("CoProcessFunctionTest")
   }
@@ -51,7 +52,7 @@ object CoProcessFunctionTest {
     override def processElement1(value: (String, String), ctx: CoProcessFunction[(String, String), (String, Long), (String, String)]#Context, out: Collector[(String, String)]): Unit = {
       //如果流2进入,并且在流2开始的时间窗内，就输出流1数据
       val currentTime = ctx.timerService().currentProcessingTime()
-      println(s"s element1 is ${currentTime198}")
+      println(s"s element1 is ${currentTime}")
       if (forwardState.value()) {
         out.collect(value)
       }
