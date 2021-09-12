@@ -32,7 +32,7 @@ object AllowLatenessTask {
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
     //第一条流来自于kafka
     val properties = new Properties()
-    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"Master:9092")
+    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "Master:9092")
     properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-flink-coProcess")
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
@@ -43,13 +43,22 @@ object AllowLatenessTask {
       (array(0), array(1).toLong)
     }).assignAscendingTimestamps(_._2).keyBy(_._1)
     val timeService = stream.timeWindow(Time.seconds(10l)).allowedLateness(Time.seconds(5))
-    timeService.process(new UpdatingWindowFunction)
+    val outputStream = timeService.process(new UpdatingWindowFunction)
+    outputStream.print()
     env.execute("AllowLatenessTask")
   }
 
-  class UpdatingWindowFunction extends ProcessWindowFunction[(String,Long),(String,Long,Int,String),String,TimeWindow]{
-    override def process(key: String, context: Context, elements: Iterable[(String, Long)], out: Collector[(String, Long, Int, String)]): Unit = {
-      
+  class UpdatingWindowFunction extends ProcessWindowFunction[(String, Long), (String, Long, String, String), String, TimeWindow] {
+    override def process(key: String, context: Context, elements: Iterable[(String, Long)], out: Collector[(String, Long, String, String)]): Unit = {
+      val thisStr = elements.map(_._1).mkString(",")
+      val isUpdate = context.windowState.getState(new ValueStateDescriptor[Boolean]("isUpdate", Types.of[Boolean]))
+      if (!isUpdate.value()) {
+        //首次进入窗口
+        out.collect((key, context.window.getEnd, thisStr, "first"))
+      } else {
+        out.collect((key, context.window.getEnd, thisStr, "second"))
+      }
     }
   }
+
 }
