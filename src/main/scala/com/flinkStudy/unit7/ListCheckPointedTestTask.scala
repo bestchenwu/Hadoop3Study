@@ -101,7 +101,7 @@ class HighTempCounter(val threshHold: Double) extends RichFlatMapFunction[Temper
   override def restoreState(state: util.List[JLong]): Unit = {
     highTempCount = 0
     for (temp <- state.asScala) {
-      highTempCount += temp
+      highTempCount = highTempCount+temp.toInt
     }
   }
 
