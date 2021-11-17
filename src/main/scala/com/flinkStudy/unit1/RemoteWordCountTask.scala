@@ -10,9 +10,16 @@ import org.apache.flink.streaming.api.scala._
 object RemoteWordCountTask {
 
   def main(args: Array[String]): Unit = {
-    val env = StreamExecutionEnvironment.createRemoteEnvironment("192.168.111.66", 18081, "D:\\studySpace\\Hadoop3Study\\target\\hadoop3Study-1.0-SNAPSHOT.jar")
+    val env = StreamExecutionEnvironment.createLocalEnvironment(1)
     val stream = env.fromCollection(List(("aa", 1), ("bb", 2), ("aa", 3), ("cc", 4)))
-    val resStream = stream.keyBy(_._1).sum(1)
+    //val resStream = stream.keyBy(_._1).sum(1)
+    val resStream = stream.keyBy(_._1).reduce((item1,item2)=>{
+        if(item1._2<item2._2){
+          item2
+        }else{
+          item1
+        }
+    })
     resStream.print()
     env.execute("RemoteWordCountTask")
   }
