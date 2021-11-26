@@ -20,14 +20,14 @@ public class Flume19WriteTask {
         String topic = "test-flink";
         while(true){
             long timeStamp = System.currentTimeMillis();
-            String value = "kafka2.2"+timeStamp;
+            String value = "kafka2.2_"+timeStamp;
             ProducerRecord record = new ProducerRecord<String, String>(topic, value);
             producer.send(record, new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata metadata, Exception exception) {
                     if(exception==null){
                         if(log.isInfoEnabled()){
-                            log.info(value+":"+metadata.timestamp());
+                            log.info(value);
                         }
                     }else{
                         log.error("error:"+value+":"+metadata.timestamp());
