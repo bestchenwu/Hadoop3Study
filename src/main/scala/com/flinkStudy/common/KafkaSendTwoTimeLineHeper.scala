@@ -36,7 +36,7 @@ object KafkaSendTwoTimeLineHeper {
       try {
         Thread.sleep(1000)
       } catch {
-        case e => e.printStackTrace()
+        case e:InterruptedException => e.printStackTrace()
       }
     }
   }

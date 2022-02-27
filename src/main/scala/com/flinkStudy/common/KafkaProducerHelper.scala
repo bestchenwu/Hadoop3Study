@@ -37,7 +37,7 @@ object KafkaProducerHelper {
       try {
         Thread.sleep(2 * 1000)
       } catch {
-        case e => e.printStackTrace()
+        case e:InterruptedException => e.printStackTrace()
       }
     }
   }
