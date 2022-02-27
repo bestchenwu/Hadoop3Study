@@ -75,11 +75,12 @@ public class AsyncIOTest {
 
  class SimpleSyncFunction extends RichAsyncFunction<Integer,String> {
 
-    private long[] sleepArray  = new long[]{100,200,300,400,500};
+    private long[] sleepArray  = new long[]{100,200,300,400,500,600};
 
     @Override
     public void asyncInvoke(Integer input, ResultFuture<String> resultFuture) {
         System.out.println(System.currentTimeMillis()+"-input:"+input+" will sleep "+sleepArray[input]);
+        query(input,resultFuture);
     }
 
     private void query(final Integer input,final ResultFuture<String> resultFuture){
