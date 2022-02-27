@@ -80,7 +80,9 @@ public class AsyncIOTest {
     @Override
     public void asyncInvoke(Integer input, ResultFuture<String> resultFuture) {
         System.out.println(System.currentTimeMillis()+"-input:"+input+" will sleep "+sleepArray[input]);
-        query(input,resultFuture);
+        //异步方法的关键在于方法体里面上异步实现
+        //query(input,resultFuture);
+        asyncQuery(input,resultFuture);
     }
 
     private void query(final Integer input,final ResultFuture<String> resultFuture){
