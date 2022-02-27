@@ -13,7 +13,8 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import java.util.Properties
 
 /**
- * flink 反馈流的测试
+ * flink 反馈流的测试<br/>
+ * 可以参考:https://www.cnblogs.com/Springmoon-venn/p/13857002.html
  *
  * @author chenwu on 2022.2.19
  */
