@@ -3,6 +3,7 @@ package com.flinkTheory.unit3
 import com.flinkTheory.KafkaMapFunction
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
+import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.api.scala.typeutils.Types
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
@@ -18,7 +19,8 @@ import java.util.Properties
 /**
  * 双流join(带状态的)<br/>
  * 如果流1先到,则输出流2
- * 同理是流2
+ * 同理是流2<br/>
+ * 参考博客:https://www.cnblogs.com/mn-lily/p/14735934.html
  *
  * @author chenwu on 2022.3.5
  */
@@ -49,9 +51,9 @@ object CoProcessWithStateFunctionTest {
 
       override def open(parameters: Configuration): Unit = {
         super.open(parameters)
-        valueState1 = getRuntimeContext.getState(new ValueStateDescriptor("valueState1", Types.STRING))
-        valueState2 = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", Types.STRING))
-        timeState = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", Types.LONG))
+        valueState1 = getRuntimeContext.getState(new ValueStateDescriptor("valueState1", createTypeInformation[String]))
+        valueState2 = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", createTypeInformation[String]))
+        timeState = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", createTypeInformation[Long]))
       }
 
       override def processElement1(value: String, ctx: CoProcessFunction[String, String, String]#Context, out: Collector[String]): Unit = {
