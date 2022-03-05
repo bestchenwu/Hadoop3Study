@@ -11,6 +11,11 @@ import org.slf4j.LoggerFactory
 
 import java.util.Properties
 
+/**
+ * 简单的双流join(两个流谁先到就线输出谁)
+ *
+ * @author chenwu on 2022.3.5
+ */
 object CoProcessFunctionTest {
 
   def main(args: Array[String]): Unit = {
