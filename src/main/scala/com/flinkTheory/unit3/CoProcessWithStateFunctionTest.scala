@@ -103,11 +103,11 @@ object CoProcessWithStateFunctionTest {
         val value1 = valueState1.value()
         val value2 = valueState2.value()
         if (value1 != null) {
-          ctx.output(outTag1, "outputTag1:" + value1)
+          ctx.output(outTag1, "outputTag1:" + value1.toString)
           valueState1.clear()
         }
         if (value2 != null) {
-          ctx.output(outTag2, "outputTag2:" + value2)
+          ctx.output(outTag2, "outputTag2:" + value2.toString)
           valueState2.clear()
         }
         timeState.clear()
