@@ -31,7 +31,7 @@ object CoProcessWithStateFunctionTest {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val statebackend = new FsStateBackend("hdfs://master:9000/flink/CoProcessWithStateFunctionTest", false);
     env.setStateBackend(statebackend)
-    env.enableCheckpointing(3000l)
+    env.enableCheckpointing(30000l)
     env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
     val properties = new Properties()
     properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "Master:9092")
@@ -60,6 +60,7 @@ object CoProcessWithStateFunctionTest {
       override def processElement1(value: (String, Int), ctx: CoProcessFunction[(String, Int), (String, Int), String]#Context, out: Collector[String]): Unit = {
         val value2 = valueState2.value()
         if (value2 != null) {
+          out.collect("value1:" + value._1 + ",value2:" + value2)
           //说明value2已经到了
           val time = timeState.value()
           valueState2.clear()
@@ -68,10 +69,10 @@ object CoProcessWithStateFunctionTest {
             ctx.timerService().deleteEventTimeTimer(time)
             timeState.clear()
           }
-          out.collect("value1:" + value._1 + ",value2:" + value2)
+
         } else {
           valueState1.update(value._1.toString)
-          val lastTime = ctx.timestamp() + 2000l
+          val lastTime = ctx.timestamp() + 10000l
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
         }
@@ -80,6 +81,7 @@ object CoProcessWithStateFunctionTest {
       override def processElement2(value: (String, Int), ctx: CoProcessFunction[(String, Int), (String, Int), String]#Context, out: Collector[String]): Unit = {
         val value1 = valueState1.value()
         if (value1 != null) {
+          out.collect("value2:" + value._1 + ",value1:" + value1)
           //说明value1已经到了
           val time = timeState.value()
           valueState1.clear()
@@ -88,10 +90,10 @@ object CoProcessWithStateFunctionTest {
             ctx.timerService().deleteEventTimeTimer(time)
             timeState.clear()
           }
-          out.collect("value2:" + value._1 + ",value1:" + value1)
+
         } else {
           valueState2.update(value._1.toString)
-          val lastTime = ctx.timestamp() + 2000l
+          val lastTime = ctx.timestamp() + 10000l
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
         }
@@ -110,7 +112,7 @@ object CoProcessWithStateFunctionTest {
           ctx.output(outTag2, "outputTag2:" + value2.toString)
           valueState2.clear()
         }
-        timeState.clear()
+        //timeState.clear()
       }
 
       override def close(): Unit = super.close()
