@@ -70,7 +70,7 @@ object CoProcessWithStateFunctionTest {
           }
           out.collect("value1:" + value._1 + ",value2:" + value2)
         } else {
-          valueState1.update(value._1)
+          valueState1.update(value._1.toString)
           val lastTime = ctx.timestamp() + 2000l
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
@@ -90,7 +90,7 @@ object CoProcessWithStateFunctionTest {
           }
           out.collect("value2:" + value._1 + ",value1:" + value1)
         } else {
-          valueState2.update(value._1)
+          valueState2.update(value._1.toString)
           val lastTime = ctx.timestamp() + 2000l
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
