@@ -54,7 +54,7 @@ object CoProcessWithStateFunctionTest {
         super.open(parameters)
         valueState1 = getRuntimeContext.getState(new ValueStateDescriptor("valueState1", createTypeInformation[String]))
         valueState2 = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", createTypeInformation[String]))
-        timeState = getRuntimeContext.getState(new ValueStateDescriptor("valueState2", createTypeInformation[Long]))
+        timeState = getRuntimeContext.getState(new ValueStateDescriptor("timeState", createTypeInformation[Long]))
       }
 
       override def processElement1(value: (String, Int), ctx: CoProcessFunction[(String, Int), (String, Int), String]#Context, out: Collector[String]): Unit = {
