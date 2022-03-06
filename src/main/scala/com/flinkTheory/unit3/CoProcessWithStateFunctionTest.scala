@@ -72,7 +72,7 @@ object CoProcessWithStateFunctionTest {
 
         } else {
           valueState1.update(value._1.toString)
-          val lastTime = ctx.timestamp() + 10000l
+          val lastTime = ctx.timerService().currentProcessingTime() + 1000*60
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
         }
@@ -93,7 +93,7 @@ object CoProcessWithStateFunctionTest {
 
         } else {
           valueState2.update(value._1.toString)
-          val lastTime = ctx.timestamp() + 10000l
+          val lastTime = ctx.timerService().currentProcessingTime()+ 1000*60
           timeState.update(lastTime)
           ctx.timerService().registerProcessingTimeTimer(lastTime)
         }
