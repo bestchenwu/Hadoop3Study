@@ -2,14 +2,20 @@ package elasticSearchStudy.common;
 
 import common.constants.SymbolConstants;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -17,7 +23,7 @@ import java.util.Properties;
  *
  * @author chenwu on 2021.6.22
  */
-public class ElasticSearchClient {
+public class ElasticSearchClient implements Closeable {
 
     private List<HttpHost> hostsAndPorts = new ArrayList<>();
     private RestHighLevelClient restHighLevelClient;
@@ -40,19 +46,42 @@ public class ElasticSearchClient {
         }
     }
 
-    private void loadFromProperties(String configFileName){
-        InputStream resourceAsStream = getClass().getResourceAsStream(configFileName);
+    private void loadFromProperties(String configFileName) {
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(configFileName);
         Properties properties = new Properties();
-        try{
+        try {
             properties.load(resourceAsStream);
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         String esHostPorts = properties.getProperty(ElasticSearchConstants.ES_HOST_PORTS);
         String[] splitArray = esHostPorts.split(SymbolConstants.SYMBOL_DH);
-        for(String item : splitArray){
+        for (String item : splitArray) {
             String[] hostPortArray = item.split(SymbolConstants.SYMBOL_MH);
-            hostsAndPorts.add(new HttpHost(hostPortArray[0],Integer.parseInt(hostPortArray[1])));
+            hostsAndPorts.add(new HttpHost(hostPortArray[0], Integer.parseInt(hostPortArray[1])));
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.restHighLevelClient.close();
+    }
+
+    /**
+     * 批量更新
+     *
+     * @param map
+     * @author chenwu on 2022.4.2
+     */
+    public boolean bulkUpdate(Map<String, Object> map) throws IOException {
+        BulkRequest bulkRequest = new BulkRequest();
+        List<Object> list = new ArrayList<>();
+        String indexName = (String) map.remove("index");
+        String id = (String) map.remove("id");
+        UpdateRequest updateRequest = new UpdateRequest();
+        updateRequest.index(indexName).id(id).doc(map);
+        bulkRequest.add(updateRequest);
+        BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        return !bulkResponse.hasFailures();
     }
 }

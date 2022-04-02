@@ -30,12 +30,11 @@ public class SimpleRateLimiter {
         String key = String.format("%s_%s",userId,actionKey);
         long currentTime = System.currentTimeMillis();
         Pipeline pipelined = redisClient.getJedis().pipelined();
-        pipelined.multi();
         pipelined.zadd(key,currentTime,String.valueOf(currentTime));
         pipelined.zremrangeByScore(key,0,currentTime-period*1000);
         pipelined.expire(key,period+1);
         Response<Long> count = pipelined.zcard(key);
-        pipelined.exec();
+        pipelined.sync();
         pipelined.close();
         return count.get()<=maxCount;
     }

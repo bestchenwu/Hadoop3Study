@@ -9,6 +9,7 @@ import redis.clients.jedis.Transaction;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Map;
 import java.util.Set;
@@ -166,7 +167,7 @@ public class RedisClient implements Closeable {
 
     public Set<String> zrangebyscore(String key, double min, double max, int offset, int count){
         Jedis jedis = getJedis();
-        Set<String> zset = jedis.zrangeByScore(key, min, max, offset, count);
+        Set<String> zset = new HashSet<>(jedis.zrangeByScore(key, min, max, offset, count));
         jedis.close();
         return zset;
     }

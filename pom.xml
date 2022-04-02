@@ -46,7 +46,7 @@
 		<zookeeper.version>3.5.8</zookeeper.version>
 		<!-- 引入redission -->
 		<!--<redission.version>3.12.3</redission.version>-->
-		<jedis.version>3.2.0</jedis.version>
+		<jedis.version>4.0.1</jedis.version>
 		<!-- 引入elasticSearch -->
 		<elasticSearch.version>7.6.0</elasticSearch.version>
 		<!-- 通过bahir连接器提供写入redis的能力 -->

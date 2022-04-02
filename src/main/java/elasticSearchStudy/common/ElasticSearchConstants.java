@@ -7,6 +7,6 @@ package elasticSearchStudy.common;
  */
 public class ElasticSearchConstants {
 
-    public static final String ES_HOST_PORTS = "127.0.0.1:9200";
+    public static final String ES_HOST_PORTS = "es_host_ports";
 
 }
