@@ -4,11 +4,14 @@ import common.constants.SymbolConstants;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.SearchHits;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -75,7 +78,6 @@ public class ElasticSearchClient implements Closeable {
      */
     public boolean bulkUpdate(Map<String, Object> map) throws IOException {
         BulkRequest bulkRequest = new BulkRequest();
-        List<Object> list = new ArrayList<>();
         String indexName = (String) map.remove("index");
         String id = (String) map.remove("id");
         UpdateRequest updateRequest = new UpdateRequest();
@@ -83,5 +85,11 @@ public class ElasticSearchClient implements Closeable {
         bulkRequest.add(updateRequest);
         BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
         return !bulkResponse.hasFailures();
+    }
+
+
+    public SearchHits search(SearchRequest searchRequest) throws IOException{
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        return searchResponse.getHits();
     }
 }
