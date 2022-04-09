@@ -51,6 +51,8 @@
 		<elasticSearch.version>7.6.0</elasticSearch.version>
 		<!-- 通过bahir连接器提供写入redis的能力 -->
 		<flink-redis.version>1.1-SNAPSHOT</flink-redis.version>
+		<!-- clickhouse-jdbc -->
+		<clickhouse-jdbc.version>0.3.2</clickhouse-jdbc.version>
 	</properties>
 
 		<dependencies>
@@ -379,6 +381,11 @@
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticSearch.version}</version>
             </dependency>
+			<dependency>
+				<groupId>com.clickhouse</groupId>
+				<artifactId>clickhouse-jdbc</artifactId>
+				<version>${clickhouse-jdbc.version}</version>
+			</dependency>
 <!--			<dependency>-->
 <!--				<groupId>org.apache.bahir</groupId>-->
 <!--				<artifactId>flink-connector-redis_2.12</artifactId>-->
