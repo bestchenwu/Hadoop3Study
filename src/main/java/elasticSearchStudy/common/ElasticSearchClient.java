@@ -4,6 +4,8 @@ import common.constants.SymbolConstants;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -85,6 +87,22 @@ public class ElasticSearchClient implements Closeable {
         bulkRequest.add(updateRequest);
         BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
         return !bulkResponse.hasFailures();
+    }
+
+    /**
+     * 根据ID和index查询索引
+     *
+     * @param id
+     * @param index
+     * @return {@link GetResponse}
+     * @throws IOException
+     * @author chenwu on 2022.4.13
+     */
+    public GetResponse getByDocId(String id,String index) throws IOException{
+        GetRequest getRequest = new GetRequest();
+        getRequest  = getRequest.id(id).index(index);
+        GetResponse getResponse = restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+        return getResponse;
     }
 
 

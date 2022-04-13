@@ -1,5 +1,6 @@
 package elasticSearchStudy.common;
 
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -42,7 +43,7 @@ public class ElasticSearchClientTest {
         Assert.assertTrue(res);
     }
 
-    @Test
+    //@Test
     public void testSearch() throws IOException{
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
         searchSourceBuilder.sort("balance", SortOrder.DESC);
@@ -61,6 +62,13 @@ public class ElasticSearchClientTest {
         for(SearchHit searchHit : searchHits.getHits()){
             System.out.println(searchHit.getSourceAsMap());
         }
+    }
+
+    @Test
+    public void testGetByDocId() throws IOException{
+        GetResponse twitter = elasticSearchClient.getByDocId("1", "twitter");
+        System.out.println("source="+twitter.getSource());
+        System.out.println("fields="+twitter.getFields());
     }
 
     @After
