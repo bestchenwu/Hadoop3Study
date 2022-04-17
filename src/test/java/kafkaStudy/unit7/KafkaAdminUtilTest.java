@@ -17,7 +17,7 @@ public class KafkaAdminUtilTest {
 
     @Test
     public void testDescribeTopics(){
-        KafkaAdminUtil.scanTopicProperty("test1");
+        KafkaAdminUtil.scanTopicProperty("test-flink");
     }
 
     @After
