@@ -4,6 +4,8 @@ import common.constants.SymbolConstants;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -13,6 +15,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHits;
 
 import java.io.Closeable;
@@ -105,9 +108,32 @@ public class ElasticSearchClient implements Closeable {
         return getResponse;
     }
 
-
+    /**
+     * 根据指定条件搜索
+     *
+     * @param {@link SearchRequest} searchRequest
+     * @return {@link SearchHits}
+     * @throws IOException
+     * @author chenwu on 2022.4.14
+     */
     public SearchHits search(SearchRequest searchRequest) throws IOException{
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         return searchResponse.getHits();
     }
+
+    /**
+     * 根据文档ID和索引名称删除
+     *
+     * @param id
+     * @param indexName
+     * @author chenwu on 2022.4.14
+     */
+    public boolean deleteById(String id,String indexName) throws IOException{
+        DeleteRequest deleteRequest = new DeleteRequest();
+        deleteRequest = deleteRequest.index(indexName).id(id);
+        DeleteResponse deleteResponse = restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+        RestStatus status = deleteResponse.status();
+        return status == RestStatus.OK;
+    }
+
 }

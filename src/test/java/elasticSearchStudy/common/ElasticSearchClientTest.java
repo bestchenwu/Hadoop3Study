@@ -64,11 +64,18 @@ public class ElasticSearchClientTest {
         }
     }
 
-    @Test
+    //@Test
     public void testGetByDocId() throws IOException{
         GetResponse twitter = elasticSearchClient.getByDocId("1", "twitter");
         System.out.println("source="+twitter.getSource());
         System.out.println("fields="+twitter.getFields());
+    }
+
+    @Test
+    public void testDeleteById() throws IOException{
+        boolean res = elasticSearchClient.deleteById("1","twitter");
+        Assert.assertTrue(res);
+
     }
 
     @After
