@@ -1,6 +1,9 @@
 package elasticSearchStudy.common;
 
+import org.apache.commons.math3.util.Pair;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.get.MultiGetItemResponse;
+import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -15,7 +18,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,6 +81,23 @@ public class ElasticSearchClientTest {
         boolean res = elasticSearchClient.deleteById("1","twitter");
         Assert.assertTrue(res);
 
+    }
+
+    @Test
+    public void testMget() throws IOException{
+        List<Pair<String,String>> itemList = new ArrayList<>();
+        itemList.add(new Pair<>("bank","2"));
+        itemList.add(new Pair<>("twitter","1"));
+        MultiGetResponse multiGetResponse = elasticSearchClient.mget(itemList);
+        MultiGetItemResponse[] responses = multiGetResponse.getResponses();
+        for(MultiGetItemResponse response : responses){
+            if(response.isFailed() || !response.getResponse().isExists()){
+                System.out.println("failure get index:"+response.getIndex()+",id="+response.getId());
+            }else{
+                System.out.println("success get index:"+response.getIndex()+",id="+response.getId());
+                System.out.println(response.getResponse().getSourceAsMap());
+            }
+        }
     }
 
     @After

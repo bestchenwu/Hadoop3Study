@@ -1,6 +1,7 @@
 package elasticSearchStudy.common;
 
 import common.constants.SymbolConstants;
+import org.apache.commons.math3.util.Pair;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -8,6 +9,8 @@ import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.get.MultiGetRequest;
+import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -136,4 +139,20 @@ public class ElasticSearchClient implements Closeable {
         return status == RestStatus.OK;
     }
 
+    /**
+     * 批量查询索引
+     *
+     * @param itemList
+     * @throws Exception
+     * @return MultiGetResponse
+     * @author chenwu on 2022.4.19
+     */
+    public MultiGetResponse mget(List<Pair<String,String>> itemList) throws IOException{
+        MultiGetRequest multiGetRequest = new MultiGetRequest();
+        for(Pair<String,String> pair : itemList){
+            multiGetRequest.add(pair.getFirst(),pair.getSecond());
+        }
+        MultiGetResponse multiGetResponse = restHighLevelClient.mget(multiGetRequest, RequestOptions.DEFAULT);
+        return multiGetResponse;
+    }
 }
