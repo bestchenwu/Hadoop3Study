@@ -1,24 +1,13 @@
 package HBaseStudy.unit2;
 
 /**
- *　参考https://www.cnblogs.com/bigyangsir/p/15629640.html
- *  https://blog.csdn.net/solo_jm/article/details/117370626
+ *　参考https://www.cnblogs.com/bigyangsir/p/15629640.html<br/>
+ *  https://blog.csdn.net/solo_jm/article/details/117370626<br/>
  *  快表练习
  *
  * @author chenwu on 2022.4.24
  **/
-public class SkipLIst {
-
-    private class Node{
-        //当前节点的值
-        public long data;
-        //分别定义上下左右四个方向的指针
-        public Node left,right,up,down;
-
-        public Node(long data){
-            this.data = data;
-        }
-    }
+public class SkipList {
 
     //最上层链表的头尾节点
     private Node head,tail;
@@ -27,13 +16,21 @@ public class SkipLIst {
     //总节点个数
     private int size;
 
-    public SkipLIst(){
-        this.head = new Node(-1);
-        this.tail = new Node(-1);
+    public SkipList(){
+        this.head = new Node(Long.MIN_VALUE);
+        this.tail = new Node(Long.MAX_VALUE);
         head.right = tail;
         tail.left = head;
         level = 1;
         size = 0;
+    }
+
+    public Node getHead(){
+        return head;
+    }
+
+    public Node getTail(){
+        return tail;
     }
 
     /**
@@ -44,6 +41,62 @@ public class SkipLIst {
      * @author chenwu on 2022.4.24
      */
     public boolean contain(long score){
+        Node tmp = head;
+        while(tmp!=null){
+            if(tmp.data == score){
+                return true;
+            }else if(tmp.right.data<=score){
+                tmp = tmp.right;
+            }else{
+                tmp = tmp.down;
+            }
+        }
         return false;
     }
+
+    public Node find(long score){
+        Node tmp = head;
+        while(tmp!=null){
+            if(tmp.data == score){
+                return tmp;
+            }else if(tmp.right.data<=score){
+                tmp = tmp.right;
+            }else{
+                tmp = tmp.down;
+            }
+        }
+        return tmp;
+    }
+
+    /**
+     * 获取比指定score小的前一个节点
+     *
+     * @param score
+     * @return {@link Node}
+     * @author chenwu on 2022.4.24
+     */
+    public Node findPreNode(long score){
+       Node tmp = head;
+       while(tmp!=null){
+           if(tmp.right.data>score){
+               if(tmp.down==null){
+                   return tmp;
+               }else{
+                   tmp = tmp.down;
+               }
+           }else{
+               tmp = tmp.right;
+           }
+       }
+       return tmp;
+    }
+
+    private Node headToBottom(){
+        Node tmp = head;
+        while(tmp.down!=null){
+            tmp = tmp.down;
+        }
+        return tmp;
+    }
+
 }

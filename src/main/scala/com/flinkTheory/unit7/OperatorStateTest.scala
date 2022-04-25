@@ -1,9 +1,7 @@
 package com.flinkTheory.unit7
 
-import org.apache.flink.api.common.state.StateDescriptor.Type
 import org.apache.flink.api.common.state.{ListState, ListStateDescriptor}
-import org.apache.flink.api.java.typeutils.TupleTypeInfo
-import org.apache.flink.api.scala.typeutils.Types
+import org.apache.flink.api.scala._
 import org.apache.flink.runtime.state.{FunctionInitializationContext, FunctionSnapshotContext}
 import org.apache.flink.streaming.api.checkpoint.CheckpointedFunction
 import org.apache.flink.streaming.api.functions.sink.SinkFunction
@@ -35,7 +33,7 @@ object OperatorStateTest {
     }
 
     override def initializeState(context: FunctionInitializationContext): Unit = {
-        val listDescriptor = new ListStateDescriptor("listState",Types.of(TupleTypeInfo.getBasicTupleTypeInfo(classOf[String],classOf[Int])))
+        val listDescriptor = new ListStateDescriptor[(String,Int)]("listState",createTypeInformation[(String, Int)])
         listState = context.getOperatorStateStore.getListState(listDescriptor)
         if(context.isRestored){
           val tuples = listState.get()
