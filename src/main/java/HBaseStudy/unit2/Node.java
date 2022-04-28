@@ -10,4 +10,9 @@ public class Node {
     public Node(long data){
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Node[data="+data+"]";
+    }
 }
