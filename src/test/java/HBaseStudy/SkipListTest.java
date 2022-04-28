@@ -44,6 +44,8 @@ public class SkipListTest {
         tail.left = halfFindNode;
         halfFindNode.down = node2;
         node2.up = halfFindNode;
+        skipList.setSize(3);
+        skipList.setLevel(2);
     }
 
     @Test
@@ -55,6 +57,8 @@ public class SkipListTest {
 
     @Test
     public void testFindPreNode(){
-        
+        long score = 3;
+        Node preNode = skipList.findPreNode(score);
+        Assert.assertEquals(2l,preNode.data);
     }
 }
