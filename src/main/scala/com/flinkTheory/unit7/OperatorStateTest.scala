@@ -3,11 +3,12 @@ package com.flinkTheory.unit7
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.api.common.state.{ListState, ListStateDescriptor}
 import org.apache.flink.api.scala._
+import org.apache.flink.configuration.Configuration
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.runtime.state.{FunctionInitializationContext, FunctionSnapshotContext}
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.checkpoint.CheckpointedFunction
-import org.apache.flink.streaming.api.functions.sink.SinkFunction
+import org.apache.flink.streaming.api.functions.sink.{RichSinkFunction, SinkFunction}
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -21,7 +22,7 @@ import scala.collection.mutable.ListBuffer
  */
 object OperatorStateTest {
 
-  class BufferingSink(threshHold0:Int,logName:String) extends SinkFunction[(String,Int)] with CheckpointedFunction{
+  class BufferingSink(threshHold0:Int,logName:String) extends RichSinkFunction[(String,Int)] with CheckpointedFunction{
 
     var threashHold:Int = threshHold0
 
@@ -29,7 +30,12 @@ object OperatorStateTest {
 
     var listState:ListState[(String,Int)] = null
 
-    var fileWriter:FileWriter =  new FileWriter(logName,true)
+    var fileWriter:FileWriter = null
+
+    override def open(parameters: Configuration): Unit = {
+      super.open(parameters)
+      fileWriter =  new FileWriter(logName,true)
+    }
 
     override def snapshotState(context: FunctionSnapshotContext): Unit = {
         listState.clear()
@@ -63,6 +69,11 @@ object OperatorStateTest {
           bufferedList.foreach(item=>fileWriter.write("invoke:"+item+"\n"))
         }
         bufferedList.clear()
+    }
+
+    override def close(): Unit = {
+      super.close()
+      fileWriter.close()
     }
   }
 
