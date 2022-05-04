@@ -1,11 +1,19 @@
 package com.flinkTheory.unit7
 
+import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.api.common.state.{ListState, ListStateDescriptor}
 import org.apache.flink.api.scala._
+import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.runtime.state.{FunctionInitializationContext, FunctionSnapshotContext}
+import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.checkpoint.CheckpointedFunction
 import org.apache.flink.streaming.api.functions.sink.SinkFunction
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
+import org.apache.kafka.clients.consumer.ConsumerConfig
 
+import java.io.FileWriter
+import java.util.Properties
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -13,23 +21,22 @@ import scala.collection.mutable.ListBuffer
  */
 object OperatorStateTest {
 
-  class BufferingSink extends SinkFunction[(String,Int)] with CheckpointedFunction{
+  class BufferingSink(threshHold0:Int,logName:String) extends SinkFunction[(String,Int)] with CheckpointedFunction{
 
-    var threashHold:Int = 0
+    var threashHold:Int = threshHold0
 
-    var bufferedList : ListBuffer[(String,Int)] = null
+    val bufferedList : ListBuffer[(String,Int)] = ListBuffer[(String,Int)]()
 
     var listState:ListState[(String,Int)] = null
 
-    def apply(threshHold0:Int): Unit ={
-      threashHold = threshHold0
-      bufferedList = ListBuffer[(String,Int)]()
-    }
-
+    var fileWriter:FileWriter =  new FileWriter(logName,true)
 
     override def snapshotState(context: FunctionSnapshotContext): Unit = {
         listState.clear()
-        bufferedList.foreach(item=>listState.add(item))
+        bufferedList.foreach(item=>{
+          println("snapshotState:"+item)
+          listState.add(item)
+        })
     }
 
     override def initializeState(context: FunctionInitializationContext): Unit = {
@@ -38,18 +45,44 @@ object OperatorStateTest {
         if(context.isRestored){
           val tuples = listState.get()
           if(tuples!=null){
-              tuples.forEach(tuple=>bufferedList.append(tuple))
+              tuples.forEach(tuple=>
+                {
+                  println("restore tuple:"+tuple)
+                  bufferedList.append(tuple)
+                })
+          }else{
+            println("restore tuple null")
           }
         }
     }
 
     override def invoke(value: (String, Int), context: SinkFunction.Context[_]): Unit = {
-
-
+        bufferedList.append(value)
+        if(bufferedList.size == threashHold){
+          //输出bufferedList
+          bufferedList.foreach(item=>fileWriter.write("invoke:"+item+"\n"))
+        }
+        bufferedList.clear()
     }
   }
 
   def main(args: Array[String]): Unit = {
-
+    val env = StreamExecutionEnvironment.getExecutionEnvironment
+    val statebackend = new FsStateBackend("hdfs://master:9000/flink/OperatorStateTest", false);
+    env.setStateBackend(statebackend)
+    env.enableCheckpointing(3000l)
+    env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
+    val properties = new Properties()
+    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "Master:9092")
+    properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-flink")
+    properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
+    properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
+    val topic1 = "test"
+    val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).filter(_.nonEmpty).filter(_.split(",").size == 2).map(item => {
+      val array = item.split(",")
+      (array(0), array(1).toInt)
+    })
+    userBehaviorStream.addSink(new BufferingSink(5,"/data/logs/flink/OperatorStateTest.log"))
+    env.execute("OperatorStateTest")
   }
 }
