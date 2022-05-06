@@ -84,15 +84,21 @@ object OperatorStateTest {
     env.enableCheckpointing(3000l)
     env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
     val properties = new Properties()
-    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "Master:9092")
+    properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "master:9092")
     properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-flink")
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     val topic1 = "test"
     val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).filter(_.nonEmpty).filter(_.split(",").size == 2).map(item => {
       val array = item.split(",")
-      (array(0), array(1).toInt)
-    })
+      val item0 = array(0)
+      val item1 = try{
+        array(1).toInt
+      }catch{
+        case _:Exception=>0
+      }
+      (item0,item1)
+    }).filter(_._2!=0)
     userBehaviorStream.addSink(new BufferingSink(5,"/data/logs/flink/OperatorStateTest.log"))
     env.execute("OperatorStateTest")
   }
