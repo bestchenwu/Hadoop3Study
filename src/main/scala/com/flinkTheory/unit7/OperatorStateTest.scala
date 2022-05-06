@@ -62,13 +62,13 @@ object OperatorStateTest {
     }
 
     override def invoke(value: (String, Int), context: SinkFunction.Context[_]): Unit = {
-      println("value+" + value)
+      println("value:" + value)
       bufferedList.append(value)
       if (bufferedList.size == threashHold) {
         //输出bufferedList
         bufferedList.foreach(item => fileWriter.write("invoke:" + item + "\n"))
+        bufferedList.clear()
       }
-      bufferedList.clear()
     }
 
     override def close(): Unit = {
@@ -90,9 +90,9 @@ object OperatorStateTest {
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     val topic1 = "test"
     val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).map(item => {
-      println("item="+item)
+      //println("item="+item)
       val array = item.split(",")
-      println("array="+array)
+      //println("array="+array)
       if(array.size<2){
         ("",0)
       }else{
