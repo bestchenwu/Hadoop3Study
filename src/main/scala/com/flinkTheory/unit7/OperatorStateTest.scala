@@ -89,15 +89,21 @@ object OperatorStateTest {
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     val topic1 = "test"
-    val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).filter(_.nonEmpty).filter(_.split(",").size == 2).map(item => {
+    val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).map(item => {
+      println("item="+item)
       val array = item.split(",")
-      val item0 = array(0)
-      val item1 = try {
-        array(1).toInt
-      } catch {
-        case _: Exception => 0
+      println("array="+array)
+      if(array.size<2){
+        ("",0)
+      }else{
+        val item0 = array(0)
+        val item1 = try {
+          array(1).toInt
+        } catch {
+          case _: Exception => 0
+        }
+        (item0, item1)
       }
-      (item0, item1)
     }).filter(_._2 != 0)
     userBehaviorStream.addSink(new BufferingSink(5, "/data/logs/flink/OperatorStateTest.log"))
     env.execute("OperatorStateTest")
