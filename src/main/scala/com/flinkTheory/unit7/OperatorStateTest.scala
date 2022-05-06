@@ -22,53 +22,53 @@ import scala.collection.mutable.ListBuffer
  */
 object OperatorStateTest {
 
-  class BufferingSink(threshHold0:Int,logName:String) extends RichSinkFunction[(String,Int)] with CheckpointedFunction{
+  class BufferingSink(threshHold0: Int, logName: String) extends RichSinkFunction[(String, Int)] with CheckpointedFunction {
 
-    var threashHold:Int = threshHold0
+    var threashHold: Int = threshHold0
 
-    val bufferedList : ListBuffer[(String,Int)] = ListBuffer[(String,Int)]()
+    val bufferedList: ListBuffer[(String, Int)] = ListBuffer[(String, Int)]()
 
-    var listState:ListState[(String,Int)] = null
+    var listState: ListState[(String, Int)] = null
 
-    var fileWriter:FileWriter = null
+    var fileWriter: FileWriter = null
 
     override def open(parameters: Configuration): Unit = {
       super.open(parameters)
-      fileWriter =  new FileWriter(logName,true)
+      fileWriter = new FileWriter(logName, true)
     }
 
     override def snapshotState(context: FunctionSnapshotContext): Unit = {
-        listState.clear()
-        bufferedList.foreach(item=>{
-          println("snapshotState:"+item)
-          listState.add(item)
-        })
+      listState.clear()
+      bufferedList.foreach(item => {
+        println("snapshotState:" + item)
+        listState.add(item)
+      })
     }
 
     override def initializeState(context: FunctionInitializationContext): Unit = {
-        val listDescriptor = new ListStateDescriptor[(String,Int)]("listState",createTypeInformation[(String, Int)])
-        listState = context.getOperatorStateStore.getListState(listDescriptor)
-        if(context.isRestored){
-          val tuples = listState.get()
-          if(tuples!=null){
-              tuples.forEach(tuple=>
-                {
-                  println("restore tuple:"+tuple)
-                  bufferedList.append(tuple)
-                })
-          }else{
-            println("restore tuple null")
-          }
+      val listDescriptor = new ListStateDescriptor[(String, Int)]("listState", createTypeInformation[(String, Int)])
+      listState = context.getOperatorStateStore.getListState(listDescriptor)
+      if (context.isRestored) {
+        val tuples = listState.get()
+        if (tuples != null) {
+          tuples.forEach(tuple => {
+            println("restore tuple:" + tuple)
+            bufferedList.append(tuple)
+          })
+        } else {
+          println("restore tuple null")
         }
+      }
     }
 
     override def invoke(value: (String, Int), context: SinkFunction.Context[_]): Unit = {
-        bufferedList.append(value)
-        if(bufferedList.size == threashHold){
-          //输出bufferedList
-          bufferedList.foreach(item=>fileWriter.write("invoke:"+item+"\n"))
-        }
-        bufferedList.clear()
+      println("value+" + value)
+      bufferedList.append(value)
+      if (bufferedList.size == threashHold) {
+        //输出bufferedList
+        bufferedList.foreach(item => fileWriter.write("invoke:" + item + "\n"))
+      }
+      bufferedList.clear()
     }
 
     override def close(): Unit = {
@@ -92,14 +92,14 @@ object OperatorStateTest {
     val userBehaviorStream = env.addSource(new FlinkKafkaConsumer[String](topic1, new SimpleStringSchema(), properties)).filter(_.nonEmpty).filter(_.split(",").size == 2).map(item => {
       val array = item.split(",")
       val item0 = array(0)
-      val item1 = try{
+      val item1 = try {
         array(1).toInt
-      }catch{
-        case _:Exception=>0
+      } catch {
+        case _: Exception => 0
       }
-      (item0,item1)
-    }).filter(_._2!=0)
-    userBehaviorStream.addSink(new BufferingSink(5,"/data/logs/flink/OperatorStateTest.log"))
+      (item0, item1)
+    }).filter(_._2 != 0)
+    userBehaviorStream.addSink(new BufferingSink(5, "/data/logs/flink/OperatorStateTest.log"))
     env.execute("OperatorStateTest")
   }
 }
