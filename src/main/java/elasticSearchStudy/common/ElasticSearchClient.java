@@ -155,4 +155,6 @@ public class ElasticSearchClient implements Closeable {
         MultiGetResponse multiGetResponse = restHighLevelClient.mget(multiGetRequest, RequestOptions.DEFAULT);
         return multiGetResponse;
     }
+
+
 }

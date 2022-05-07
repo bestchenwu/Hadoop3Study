@@ -100,6 +100,20 @@ public class ElasticSearchClientTest {
         }
     }
 
+    /**
+     * 测试读取date类型
+     *
+     * @throws IOException
+     * @author chenwu on 2022.5.7
+     */
+    @Test
+    public void testReadDate() throws IOException{
+        GetResponse myIndexResponse = elasticSearchClient.getByDocId("3", "my_index");
+        Map<String, Object> sourceAsMap = myIndexResponse.getSourceAsMap();
+        String create_date = (String)sourceAsMap.get("create_date");
+        System.out.println("create_date="+create_date);
+    }
+
     @After
     public void end() throws IOException {
         elasticSearchClient.close();
