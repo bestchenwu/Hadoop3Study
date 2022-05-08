@@ -67,6 +67,7 @@ object OperatorStateTest {
       if (bufferedList.size == threashHold) {
         //输出bufferedList
         bufferedList.foreach(item => fileWriter.write("invoke:" + item + "\n"))
+        fileWriter.flush()
         bufferedList.clear()
       }
     }
