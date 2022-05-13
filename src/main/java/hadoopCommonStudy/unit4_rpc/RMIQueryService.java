@@ -13,4 +13,8 @@ public interface RMIQueryService extends Remote, Serializable {
 
     public RMIFileStatus getFileStatus(String fileName) throws RemoteException;
 
+    public int add(int a,int b) throws RemoteException;
+
+    public int multi(int a,int b) throws RemoteException;
+
 }

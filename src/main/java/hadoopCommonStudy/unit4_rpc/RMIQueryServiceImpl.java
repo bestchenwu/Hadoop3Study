@@ -34,4 +34,14 @@ public class RMIQueryServiceImpl extends UnicastRemoteObject implements RMIQuery
         status.setFileCreateTime(fileCreateTime);
         return status;
     }
+
+    @Override
+    public int add(int a, int b) throws RemoteException {
+        return a+b;
+    }
+
+    @Override
+    public int multi(int a, int b) throws RemoteException {
+        return a*b;
+    }
 }
