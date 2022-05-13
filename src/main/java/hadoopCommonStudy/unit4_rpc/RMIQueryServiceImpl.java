@@ -5,10 +5,20 @@ import common.CommonDateUtil;
 import java.io.File;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class RMIQueryServiceImpl implements RMIQueryService {
+/**
+ * 必须继承UnicastRemoteObject，以允许JVM创建远程的存根/代理。
+ *
+ * @author chenwu on 2022.5.13
+ */
+public class RMIQueryServiceImpl extends UnicastRemoteObject implements RMIQueryService {
+
+    public RMIQueryServiceImpl() throws RemoteException{
+        super();
+    }
 
     @Override
     public RMIFileStatus getFileStatus(String fileName) throws RemoteException {
