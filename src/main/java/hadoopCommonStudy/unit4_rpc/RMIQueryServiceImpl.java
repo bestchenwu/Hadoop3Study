@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * 必须继承UnicastRemoteObject，以允许JVM创建远程的存根/代理。
+ * 参考https://blog.csdn.net/qq_35733751/article/details/118698917
  *
  * @author chenwu on 2022.5.13
  */
