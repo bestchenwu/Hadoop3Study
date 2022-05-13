@@ -7,13 +7,14 @@ import java.rmi.registry.Registry;
 public class RMIQueryServer {
 
     public static void main(String[] args) {
+        String host = args[0];
         try{
             RMIQueryServiceImpl impl = new RMIQueryServiceImpl();
             LocateRegistry.createRegistry(12090);
-            Registry registry = LocateRegistry.getRegistry();
-            registry.bind("queryFileStatus",impl);
-//            Naming.bind(String.format("rmi://%s:12090/queryFileStatus",host),impl);
-            System.out.println("server ready");
+//            Registry registry = LocateRegistry.getRegistry();
+//            registry.bind("queryFileStatus",impl);
+            Naming.bind(String.format("rmi://%s:12090/queryFileStatus",host),impl);
+            System.out.println("server ready....");
         }catch (Exception e){
             e.printStackTrace();
         }
