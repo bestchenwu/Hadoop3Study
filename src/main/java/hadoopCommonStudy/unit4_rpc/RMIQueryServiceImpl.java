@@ -12,6 +12,7 @@ public class RMIQueryServiceImpl implements RMIQueryService {
 
     @Override
     public RMIFileStatus getFileStatus(String fileName) throws RemoteException {
+        System.out.println("fileName="+fileName);
         File file = new File(fileName);
         long lastModified = file.lastModified();
         Date date = new Date();
