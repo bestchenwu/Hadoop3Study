@@ -6,10 +6,11 @@ import java.rmi.registry.LocateRegistry;
 public class RMIQueryServer {
 
     public static void main(String[] args) {
+        String host = args[0];
         try{
             RMIQueryServiceImpl impl = new RMIQueryServiceImpl();
             LocateRegistry.createRegistry(12090);
-            Naming.bind("rmi://192.168.111.116:12090/queryFileStatus",impl);
+            Naming.bind(String.format("rmi://%s:12090/queryFileStatus",host),impl);
             System.out.println("server ready");
             while(true){
 
