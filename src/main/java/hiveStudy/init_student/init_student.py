@@ -32,7 +32,7 @@ def create_student_dict(start):
                      "s_score": abs(scorelist[random.randint(1000, 4990)]),
                      "s_desc": u"为程序猿攻城狮队伍补充新鲜血液,"u"为祖国未来科技产业贡献一份自己的力量" * random.randint(1, 20)}
             # 写入模型数据到文件
-            fp.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}".format(model['s_no'], model['s_name'], model['s_birth'],
+            fp.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\n".format(model['s_no'], model['s_name'], model['s_birth'],
                                                                 model['s_age'], model['s_sex'], model['s_score'],
                                                                 model['s_desc']))
 
