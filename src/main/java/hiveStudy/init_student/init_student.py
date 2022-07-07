@@ -19,7 +19,7 @@ def create_student_dict(start):
     scorelist = [int(random.normalvariate(100, 50)) for _ in range(1, 5000)]
     # 创建1万条记录
     filename = str(start) + '.txt'
-    with open('/home/openmldb/logs/hive/init/data/' + filename, mode='w+') as fp:
+    with open('/home/openmldb/logs/hive/init/student_tb_txt/' + filename, mode='w+') as fp:
         for i in range(start * 40000, (start + 1) * 40000):
             firstind = random.randint(1, firstlen - 4)
             model = {"s_no": u"xuehao_" + str(i),
