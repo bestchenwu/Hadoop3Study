@@ -1,3 +1,4 @@
+drop table if exists default.student_tb_txt;
 create table if not exists default.student_tb_txt(
   s_no string comment '学号',
   s_name string comment '姓名',
