@@ -44,3 +44,55 @@ union all
 select s_age,min(s_birth) stat, 'min' tp
 from student_tb_txt
 group by s_age;
+
+
+--进行文件压缩
+set hive.merge.mapfiles=true;
+set hive.merge.orcfile.stripe.level=true;
+set hive.merge.size.per.task=268435456;
+set hive.merge.smallfiles.avgsize=16777216;
+create table student_tb_orc like student_tb_txt stored as orc;
+insert into student_tb_orc
+select * from student_tb_txt;
+
+create table student_tb_txt_bigfile like student_tb_txt stored as textfile;
+insert into student_tb_txt_bigfile
+select * from student_tb_orc;
+
+--重新试验插入速度
+insert into table student_stat partition(tp)
+select s_age,max(s_birth) stat,'max' tp
+from student_tb_txt_bigfile
+group by s_age;
+
+insert into table student_stat partition(tp)
+select s_age,min(s_birth) stat,'min' tp
+from student_tb_txt_bigfile
+group by s_age;
+
+
+--建立分区分桶的表
+drop table if exists  student_orc_bucket;
+create table if not exists student_orc_bucket(
+s_no                    string,
+s_name                  string,
+s_birth                string,
+s_age                  bigint,
+s_sex                   string,
+s_score                bigint,
+s_desc                 string
+)
+--取s_birth的年份作为分区
+partitioned by (birth_year string comment '生日的年份作为分区')
+--分成16个桶
+clustered BY (s_age) INTO 16 BUCKETS
+STORED AS ORC;
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.enforce.bucketing = true;
+insert into table student_orc_bucket
+partition(birth_year)
+select s_no,s_name,s_birth,s_age,s_sex,s_score,s_desc,year(s_birth) as birth_year
+from student_tb_orc;
+
