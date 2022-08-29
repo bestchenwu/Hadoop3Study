@@ -53,6 +53,8 @@
 		<flink-redis.version>1.1-SNAPSHOT</flink-redis.version>
 		<!-- clickhouse-jdbc -->
 		<clickhouse-jdbc.version>0.3.2</clickhouse-jdbc.version>
+		<!-- mvn scala编译插件 -->
+		<maven-scala-plugin.version>2.15.2</maven-scala-plugin.version>
 	</properties>
 
 		<dependencies>
@@ -188,12 +190,12 @@
 				<version>${scala.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<!--<dependency>-->
-				<!--<groupId>org.scala-tools</groupId>-->
-				<!--<artifactId>maven-scala-plugin</artifactId>-->
-				<!--<version>2.15.2</version>-->
-				<!--<scope>provided</scope>-->
-			<!--</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>org.scala-tools</groupId>-->
+<!--				<artifactId>maven-scala-plugin</artifactId>-->
+<!--				<version>2.15.2</version>-->
+<!--				<scope>provided</scope>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -433,28 +435,28 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-			<!--<plugin>-->
-				<!--<groupId>org.scala-tools</groupId>-->
-				<!--<artifactId>maven-scala-plugin</artifactId>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<goals>-->
-							<!--<goal>compile</goal>-->
-							<!--<goal>testCompile</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
 			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>scala-maven-plugin</artifactId>
-				<version>4.4.0</version>
-				<configuration>
-					<scalaCompatVersion>2.12</scalaCompatVersion>
-					<scalaVersion>${scala.version}</scalaVersion>
-				</configuration>
-				<!-- other settings-->
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<version>${maven-scala-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>net.alchim31.maven</groupId>-->
+<!--				<artifactId>scala-maven-plugin</artifactId>-->
+<!--				<version>4.4.0</version>-->
+<!--				<configuration>-->
+<!--					<scalaCompatVersion>2.12</scalaCompatVersion>-->
+<!--					<scalaVersion>${scala.version}</scalaVersion>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 			<!--<plugin>-->
 				<!--<groupId>org.apache.maven.plugins</groupId>-->
 				<!--<artifactId>maven-source-plugin</artifactId>-->
